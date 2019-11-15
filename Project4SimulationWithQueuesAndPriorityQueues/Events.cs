@@ -30,12 +30,17 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
 
         public override string ToString()
         {
-            yeet;
+           
         }
+
 
         public int CompareTo(object obj)
         {
-            throw new NotImplementedException();
+            if (!(obj is Event))
+                throw new ArgumentException("The argument is not an Event object");
+
+            Event e = (Event)obj;
+            return (e.Time.CompareTo(Time));
         }
     }
 }

@@ -14,6 +14,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
 
             Console.WriteLine("Hi");
             Console.ReadLine();
+            
         }
     }
 }
