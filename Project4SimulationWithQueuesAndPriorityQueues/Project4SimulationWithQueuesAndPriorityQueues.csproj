@@ -46,7 +46,6 @@
     <Compile Include="Events.cs" />
     <Compile Include="PriorityQueue.cs" />
     <Compile Include="Registrant.cs" />
-    <Compile Include="Registrants.cs" />
     <Compile Include="SimulationDriver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
