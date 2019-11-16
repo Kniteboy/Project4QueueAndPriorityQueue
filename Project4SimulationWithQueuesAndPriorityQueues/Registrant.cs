@@ -66,7 +66,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         /// </summary>
         public Registrant()
         {
-            ArrivalTime = new TimeSpan(Registrant.r.Next(0, ConventionRegistration.EndTimeHour), Registrant.r.Next(0, ConventionRegistration.EndTimeMinute), 0);
+            //ArrivalTime = new TimeSpan(Registrant.r.Next(0, ConventionRegistration.EndTimeHour), Registrant.r.Next(0, ConventionRegistration.EndTimeMinute), 0);
             Interval = new TimeSpan(0, (int)(1.5 + NegativeExponential(3)), 0);
             DepartureTime = new TimeSpan();
             RegistrantNumber = Poisson(1000);   //The convention center is planning for an expected 1000 people 
@@ -78,7 +78,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         /// <param name="ExpectedNumberOfPeople">The expected number of people at the registration event</param>
         public Registrant(int ExpectedNumberOfPeople, double ExpectedRegistrationTime)
         {
-            ArrivalTime = new TimeSpan(Registrant.r.Next(0, ConventionRegistration.EndTimeHour), Registrant.r.Next(0,  ConventionRegistration.EndTimeMinute), 0); //Generate random number between start and closing time of event
+            //ArrivalTime = new TimeSpan(Registrant.r.Next(0, ConventionRegistration.EndTimeHour), Registrant.r.Next(0,  ConventionRegistration.EndTimeMinute), 0); //Generate random number between start and closing time of event
             Interval = new TimeSpan(0, (int)(ExpectedRegistrationTime + NegativeExponential(3)), 0); //Minimum time is one minute thirty seconds and the expected time is four minute and thirty seconds
             DepartureTime = new TimeSpan();
             RegistrantNumber = Poisson(ExpectedNumberOfPeople);   //Allows the registration convention center to change the expected number of people 

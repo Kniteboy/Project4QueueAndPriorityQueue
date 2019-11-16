@@ -32,8 +32,9 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             ConventionRegistration cr = new ConventionRegistration();
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.BackgroundColor = ConsoleColor.White;
-            Menu menu = new Menu();
+            Menu menu = new Menu("Convention Registration");
             menu = menu + "Set the number of Registrants" + "Set the number of hours of operation" + "Set the number of windows" + "Set the expected checkout duration" + "Run the simulation" + "End the program";
+
 
             Choices choice = new Choices();
             while(choice != Choices.QUIT)
@@ -42,24 +43,25 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 {
                     case Choices.NUMBEROFREGISTRANTS:
                         //Set the expected value of registrants here
+                        cr.ExpectedNumberOfRegistrants = Console.ReadLine();
                         break;
                     case Choices.HOURSOFOPERATION:
                         //set the hours of operation here
+                        cr.HoursOfOperation = Console.ReadLine();
                         break;
                     case Choices.NUMBEROFWINDOWS:
                         //set the number of windows here
+                        cr.NumberOfWindows = Console.ReadLine();
                         break;
                     case Choices.CHECKOUTDURATION:
                         //set the expected value of the checkout duration here
-                        break;
-                    case Choices.QUIT:
-                        //quit the application
-                        Environment.Exit(1);
+                        cr.CheckoutDuration = Console.ReadLine();
                         break;
                 }
-            }
-            
+                choice = (Choices)menu.GetChoice();
+            }//end while(choice != Choices.QUIT)
 
-        }
-    }
-}
+
+        }//end Main()
+    }//end SimulationDriver
+}//end name space Project4SimulationWithQueuesAndPriorityQueues
