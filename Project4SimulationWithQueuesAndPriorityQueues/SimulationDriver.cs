@@ -10,10 +10,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
     {
         static void Main()
         {
-            //This is a test
-
-            Console.WriteLine("Hi");
-            Console.ReadLine();
+            ConventionRegistration cr = new ConventionRegistration();
             
         }
     }
