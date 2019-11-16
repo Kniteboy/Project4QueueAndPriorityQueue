@@ -1,19 +1,22 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//	Solution/Project:  MenuDemo/MenuDemo
+//	Solution/Project:  Project4SimulationWithQueuesAndPriorityQueues
 //	File Name:         Choices.cs
 //	Description:       A set of choices for a Menu in the MenuDemoDriver
 //	Course:            CSCI 2210 - Data Structures	
-//	Author:            Don Bailes, bailes@etsu.edu, Dept. of Computing, East Tennessee State University
-//	Created:           Monday, February 23, 2015
-//	Copyright:         Don Bailes, 2015
+//	Author:            Seth Norton, nortonsp@etsu.edu, Dept. of Computing, East Tennessee State University
+//	Created:           Saturday, November 16, 2019
+//	Copyright:         Seth Norton, 2019
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 namespace MenuClassDemo
 {
+    /// <summary>
+    /// An enumerated data type representing the choices for the program
+    /// </summary>
     enum Choices
     {
-        OPEN = 1, EDIT, CLOSE, QUIT
+        NUMBEROFREGISTRANTS = 1, HOURSOFOPERATION, NUMBEROFWINDOWS, CHECKOUTDURATION, RUNSIMULATION, QUIT
     }
 }
