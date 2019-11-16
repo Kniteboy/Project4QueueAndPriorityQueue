@@ -24,7 +24,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
     /// The class associated with associating an event with a registrant
     /// </summary>
     /// <seealso cref="System.IComparable" />
-    class Event : IComparable
+    class Event : IComparable<Event>
     {
         /// <summary>
         /// Gets or sets the type of event (either an arrival, departure or a line selection)
@@ -100,7 +100,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         /// A value that indicates the relative order of the objects being compared. The return value has these meanings: Value Meaning Less than zero This instance precedes <paramref name="obj" /> in the sort order. Zero This instance occurs in the same position in the sort order as <paramref name="obj" />. Greater than zero This instance follows <paramref name="obj" /> in the sort order.
         /// </returns>
         /// <exception cref="ArgumentException">The argument is not an Event object</exception>
-        public int CompareTo(object obj)
+        public int CompareTo(Event obj)
         {
             if (!(obj is Event))
                 throw new ArgumentException("The argument is not an Event object");
