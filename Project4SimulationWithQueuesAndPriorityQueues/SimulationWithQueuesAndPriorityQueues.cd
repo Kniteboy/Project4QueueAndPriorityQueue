@@ -24,14 +24,14 @@
   <Class Name="Project4SimulationWithQueuesAndPriorityQueues.Registrant">
     <Position X="0.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAIAAIACECAAAAAAAAAAAAAJAAgAAAA=</HashCode>
       <FileName>Registrant.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Project4SimulationWithQueuesAndPriorityQueues.PriorityQueue">
+  <Class Name="Project4SimulationWithQueuesAndPriorityQueues.PriorityQueue&lt;T&gt;">
     <Position X="0.5" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AABAAAAAAAAEAAAAAAAAAAwAAAAABAAAAAAAAABAAAA=</HashCode>
       <FileName>PriorityQueue.cs</FileName>
     </TypeIdentifier>
   </Class>

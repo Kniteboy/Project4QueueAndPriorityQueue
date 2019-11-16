@@ -5,32 +5,36 @@ using System.Text;
 
 namespace Project4SimulationWithQueuesAndPriorityQueues
 {
-    enum EVENTTYPE {ENTER, LEAVE };
+    enum EVENTTYPE {ARRIVAL, DEPARTURE };
     class Event : IComparable
     {
         public EVENTTYPE Type { get; set; }
         public DateTime Time { get; set; }
-        //public int Patron { get; set }
-        //make this into a registrant
+        public Registrant Registrant { get; set; }
+        
 
         public Event()
         {
-            Type = EVENTTYPE.ENTER;
+            Type = EVENTTYPE.ARRIVAL;
             Time = DateTime.Now;
-            Patron = -1;
+            Registrant = null;
         }
 
 
-        public Event(EVENTTYPE type, DateTime time, int patron)
+        public Event(EVENTTYPE type, DateTime time, Registrant patron)
         {
             Type = type;
             Time = time;
-            Patron = patron;
+            Registrant = patron;
         }
 
         public override string ToString()
         {
-           
+            string str = "";
+
+            str += String.Format("Registrant {0}", Registrant.ToString().PadLeft(3));
+            str += Type + "'s"
+            str += String.Format(" at {0}", Time.ToShortTimeString().PadLeft(8));
         }
 
 
