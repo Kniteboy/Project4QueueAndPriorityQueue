@@ -29,7 +29,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         private DateTime openTime = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 8, 0, 0);
         private DateTime closingTime = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 18, 0, 0);
 
-
+        #region Properties
         private int expectedNumberOfRegistrants;
 
         /// <summary>
@@ -85,7 +85,8 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             get { return checkoutDuration; }
             set { checkoutDuration = value; }
         } //end CheckoutDuration
-
+        #endregion
+        
         /// <summary>
         /// Default constructor that initializes a new instance of the <see cref="ConventionRegistration"/> class.
         /// </summary>
@@ -98,7 +99,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             expectedNumberOfRegistrants = 1000;
             hoursOfOperation = 10;
             numberOfWindows = 1;
-            checkoutDuration = 5.5;
+            checkoutDuration = 4.5;
 
         } //end ConventionRegistration()
 
@@ -113,16 +114,16 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         public void GenerateEvents()
         {
             TimeSpan start;
-            TimeSpan interval;
             actualNumberOfRegistrants = Poisson(expectedNumberOfRegistrants);
 
             for (int i = 1; i <= actualNumberOfRegistrants; i++)
             {
                 start = new TimeSpan(0, r.Next(10 * 60), 0);
-                interval = new TimeSpan(0, (int)(1.5 + NegativeExponential(checkoutDuration)), 0);  //min time: 1 minute & 30 seconds
 
-                PQ.Enqueue(new Event(EVENTTYPE.ARRIVAL, openTime.Add(start), i));
-                PQ.Enqueue();
+                Registrant temp = new Registrant(i, start, checkoutDuration);
+
+                PQ.Enqueue(new Event(EVENTTYPE.ARRIVAL, openTime.Add(temp.ArrivalTime), temp));
+                PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(temp.DepartureTime), temp));
             } //end for (int i = 0; i < actualNumberOfRegistrants; i++)
 
         } //end GenerateEvents()
