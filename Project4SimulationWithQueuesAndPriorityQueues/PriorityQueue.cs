@@ -1,6 +1,6 @@
 ﻿///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//	Solution/Project:  Project4SimulationWithQueuesAndPriorityQueues/Project4SimulationWithQueuesAndPriorityQueues
+//	Solution/Project:  Project4SimulationWithQueuesAndPriorityQueues
 //	File Name:         PriorityQueue.cs
 //	Description:       Hold and manage a queue where items are sorted first by priority, then by order of entry
 //	Course:            CSCI 2210 - Data Structures	

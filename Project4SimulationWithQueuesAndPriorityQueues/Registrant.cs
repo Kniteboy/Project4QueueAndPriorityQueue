@@ -1,6 +1,6 @@
 ﻿///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//	Solution/Project:  Project4SimulationWithQueuesAndPriorityQueues/Project4SimulationWithQueuesAndPriorityQueues
+//	Solution/Project:  Project4SimulationWithQueuesAndPriorityQueues
 //	File Name:         Registrant.cs
 //	Description:       Handles the time events of the registrant and also the registrant number
 //	Course:            CSCI 2210 - Data Structures	
