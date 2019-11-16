@@ -25,6 +25,8 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         /// A Random object to handle all the random events in the registrant class
         /// </summary>
         private static Random r = new Random();
+
+       
         
         /// <summary>
         /// Used to give each registrant a number (generated from a Poisson distribution)
