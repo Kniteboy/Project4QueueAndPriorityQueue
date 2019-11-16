@@ -1,8 +1,8 @@
 ﻿///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 //	Solution/Project:  Project4SimulationWithQueuesAndPriorityQueues
-//	File Name:         Registrant.cs
-//	Description:       Handles the time events of the registrant and also the registrant number
+//	File Name:         Event.cs
+//	Description:       Defines the type of events that will be associated with a registrant
 //	Course:            CSCI 2210 - Data Structures	
 //	Author:            Seth Norton, nortonsp@etsu.edu
 //	Created:           Saturday, November 16, 2019

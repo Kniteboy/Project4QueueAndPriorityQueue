@@ -70,19 +70,19 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             //ArrivalTime = new TimeSpan(Registrant.r.Next(0, ConventionRegistration.EndTimeHour), Registrant.r.Next(0, ConventionRegistration.EndTimeMinute), 0);
             Interval = new TimeSpan(0, (int)(1.5 + NegativeExponential(3)), 0);
             DepartureTime = new TimeSpan();
-            RegistrantNumber = Poisson(1000);   //The convention center is planning for an expected 1000 people 
+            RegistrantNumber = 0;   //The convention center is planning for an expected 1000 people 
         }
 
         /// <summary>
         /// Allows the user to change the expected number of people at the registration event
         /// </summary>
-        /// <param name="ExpectedNumberOfPeople">The expected number of people at the registration event</param>
-        public Registrant(int ExpectedNumberOfPeople, double ExpectedRegistrationTime)
+        /// <param name="expectedNumberOfPeople">The expected number of people at the registration event</param>
+        public Registrant(int expectedNumberOfPeople, double expectedRegistrationTime, int registrantNumber)
         {
             //ArrivalTime = new TimeSpan(Registrant.r.Next(0, ConventionRegistration.EndTimeHour), Registrant.r.Next(0,  ConventionRegistration.EndTimeMinute), 0); //Generate random number between start and closing time of event
-            Interval = new TimeSpan(0, (int)(ExpectedRegistrationTime + NegativeExponential(3)), 0); //Minimum time is one minute thirty seconds and the expected time is four minute and thirty seconds
+            Interval = new TimeSpan(0, (int)(expectedRegistrationTime + NegativeExponential(3)), 0); //Minimum time is one minute thirty seconds and the expected time is four minute and thirty seconds
             DepartureTime = new TimeSpan();
-            RegistrantNumber = Poisson(ExpectedNumberOfPeople);   //Allows the registration convention center to change the expected number of people 
+            RegistrantNumber = registrantNumber;   //Allows the registration convention center to change the expected number of people 
         }
 
         #endregion constructor
@@ -90,22 +90,6 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
 
 
         #region distribution code
-        /// <summary>
-        /// The method generating numbers from a Poisson distribution for the registrant's display number
-        /// </summary>
-        /// <param name="ExpectedValue">The expected number of registrants</param>
-        /// <returns>a number from the Poisson distribution</returns>
-        private static int Poisson(double ExpectedValue)
-        {
-            double dLimit = -ExpectedValue;
-            double dSum = Math.Log(Registrant.r.NextDouble());
-
-            int Count;
-            for (Count = 0; dSum > dLimit; Count++)
-                dSum += Math.Log(Registrant.r.NextDouble());
-            return Count;
-
-        }
 
         /// <summary>
         /// The negative exponential function determines how long an individual stays at the registration booth (after getting out of the line)
