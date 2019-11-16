@@ -17,9 +17,9 @@ using System.Text;
 namespace Project4SimulationWithQueuesAndPriorityQueues
 {
     /// <summary>
-    /// The two different event types for the registration event
+    /// The three different event types for the registration event
     /// </summary>
-    enum EVENTTYPE {ARRIVAL, DEPARTURE };
+    enum EVENTTYPE {ARRIVAL, DEPARTURE, LINESELECTION };
     /// <summary>
     /// The class associated with associating an event with a registrant
     /// </summary>
@@ -27,10 +27,10 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
     class Event : IComparable
     {
         /// <summary>
-        /// Gets or sets the type of event (either an arrival or a departure)
+        /// Gets or sets the type of event (either an arrival, departure or a line selection)
         /// </summary>
         /// <value>
-        /// The type of event (arrival or departure)
+        /// The type of event (either an arrival, departure or a line selection)
         /// </value>
         public EVENTTYPE Type { get; set; }
         /// <summary>
