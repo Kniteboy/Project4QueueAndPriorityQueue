@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace Project4SimulationWithQueuesAndPriorityQueues
 {
@@ -93,12 +94,12 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         public ConventionRegistration()
         {
             r = new Random();
-            maxLineCount = 0;
+            maxLineCount = 1;
             PQ = new PriorityQueue<Event>();
-            regLines = new List<Queue<Registrant>>();
             expectedNumberOfRegistrants = 1000;
             hoursOfOperation = 10;
             numberOfWindows = 1;
+            regLines = new List<Queue<Registrant>>(numberOfWindows);
             checkoutDuration = 4.5;
 
         } //end ConventionRegistration()
@@ -108,18 +109,42 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         /// </summary>
         public void RunSimulation()
         {
+            string windows = "";
+            string windowOutput = "";
+
             while (PQ.Count > 0)
             {
+                windows = "";
+                windowOutput = "";
                 Console.Clear();
-                Console.SetCursorPosition((Console.WindowWidth - 20) / 2, 1);
-                Console.WriteLine("Registration Windows");
-                Console.SetCursorPosition((Console.WindowWidth - 20) / 2, 2);
-                Console.WriteLine("--------------------");
+
+                Console.WriteLine("\t\t\tRegistration Windows");
+                Console.WriteLine("\t\t\t--------------------\n");
 
                 for (int i = 0; i < numberOfWindows; i++)
                 {
-
+                    windows += $"\tW {i + 1}";
                 } //end for (int i = 0; i < numberOfWindows; i++)
+
+                Console.WriteLine(windows);
+
+                for (int i = 0; i < maxLineCount; i++)
+                {
+                    for (int j = 0; j < numberOfWindows; j++)
+                    {
+                        if (PQ.Peek() == null)
+                        {
+                            windowOutput = "    ";
+                        } //end if (PQ.Peek() == null)
+                        else
+                        {
+                            windowOutput = $"{}";
+                        }
+                        Console.Write("\n\t");
+                    }
+                } //end for (int i = 0; i < maxLineCount; i++)
+
+                Thread.Sleep(1000);
             }
         } //end RunSimulation()
 
@@ -151,11 +176,11 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         private int Poisson(double ExpectedValue)
         {
             double dLimit = -ExpectedValue;
-            double dSum = Math.Log(Registrant.r.NextDouble());
+            double dSum = Math.Log(r.NextDouble());
 
             int Count;
             for (Count = 0; dSum > dLimit; Count++)
-                dSum += Math.Log(Registrant.r.NextDouble());
+                dSum += Math.Log(r.NextDouble());
             return Count;
         } //end Poisson(double ExpectedValue)
 

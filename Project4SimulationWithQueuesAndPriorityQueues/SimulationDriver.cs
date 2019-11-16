@@ -82,7 +82,9 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                         break;
                     case Choices.RUNSIMULATION:
                         //run the simulation
-                        cr.DoSimulation();
+                        cr.GenerateEvents();
+                        cr.RunSimulation();
+                        Console.ReadLine();
                         break;
                 }
                 
