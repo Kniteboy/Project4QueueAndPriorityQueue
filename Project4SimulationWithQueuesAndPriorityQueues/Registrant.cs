@@ -10,9 +10,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Project4SimulationWithQueuesAndPriorityQueues
 {
@@ -31,6 +28,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         /// </summary>
 
         public int RegistrantNumber { get; set;}
+
         /// <summary>
         /// The interval/duration each registrant takes at the registration table
         /// </summary>
@@ -55,9 +53,9 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             get => departureTime;
             set
             {
-                departureTime = ArrivalTime + Interval;  //add the interval to the arrival time
+                departureTime = value;  //add the interval to the arrival time
             }
-        }
+        }//end TimeSpan DepartureTime
 
         #endregion properties
 
@@ -67,23 +65,27 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         /// </summary>
         public Registrant()
         {
-            //ArrivalTime = new TimeSpan(Registrant.r.Next(0, ConventionRegistration.EndTimeHour), Registrant.r.Next(0, ConventionRegistration.EndTimeMinute), 0);
+            ArrivalTime = new TimeSpan(0,0,0);
             Interval = new TimeSpan(0, (int)(1.5 + NegativeExponential(3)), 0);
             DepartureTime = new TimeSpan();
-            RegistrantNumber = 0;   //The convention center is planning for an expected 1000 people 
-        }
+            RegistrantNumber = 0;   //The default registration number will be zero
+        }//end Registrant()
+
 
         /// <summary>
-        /// Allows the user to change the expected number of people at the registration event
+        /// Constructor to take all the registrant information (number, arrival time, departure time and the expected registration time)
         /// </summary>
-        /// <param name="expectedNumberOfPeople">The expected number of people at the registration event</param>
-        public Registrant(int expectedNumberOfPeople, double expectedRegistrationTime, int registrantNumber)
+        /// <param name="registrantNumber">the registrant's number</param>
+        /// <param name="arrivalTime">the arrival time of the registrant</param>
+        /// <param name="departtureTime">the departure time of the registrant</param>
+        /// <param name="expectedRegistrationTime">the expected registration time of the registrant</param>
+        public Registrant(int registrantNumber, TimeSpan arrivalTime, double expectedRegistrationTime)
         {
-            //ArrivalTime = new TimeSpan(Registrant.r.Next(0, ConventionRegistration.EndTimeHour), Registrant.r.Next(0,  ConventionRegistration.EndTimeMinute), 0); //Generate random number between start and closing time of event
-            Interval = new TimeSpan(0, (int)(expectedRegistrationTime + NegativeExponential(3)), 0); //Minimum time is one minute thirty seconds and the expected time is four minute and thirty seconds
-            DepartureTime = new TimeSpan();
-            RegistrantNumber = registrantNumber;   //Allows the registration convention center to change the expected number of people 
-        }
+            ArrivalTime = arrivalTime;
+            Interval = new TimeSpan(0, (int) (expectedRegistrationTime + NegativeExponential(3)), 0); //Minimum time is one minute thirty seconds and the expected time is four minute and thirty seconds
+            DepartureTime = ArrivalTime + Interval;
+            RegistrantNumber = registrantNumber;   //Sets the specified registrant number
+        }//end Registrant(int registrantNumber, TimeSpan arrivalTime, int expectedRegistrationTime)
 
         #endregion constructor
 
@@ -99,7 +101,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         private static double  NegativeExponential(double ExpectedValue)
         {
             return -ExpectedValue * Math.Log(Registrant.r.NextDouble(), Math.E);
-        }
+        }//end NegativeExponential(double ExpectedValue)
         #endregion distribution code
 
     }
