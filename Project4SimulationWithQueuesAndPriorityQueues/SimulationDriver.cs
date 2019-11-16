@@ -46,23 +46,43 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 {
                     case Choices.NUMBEROFREGISTRANTS:
                         //Set the expected value of registrants here
-                        cr.ExpectedNumberOfRegistrants = Console.ReadLine();
+                        int numberOfRegistrants = 0;
+                        while(numberOfRegistrants == 0)
+                        {
+                            Int32.TryParse(Console.ReadLine(), out numberOfRegistrants);
+                            cr.ExpectedNumberOfRegistrants = numberOfRegistrants;
+                        }
                         break;
                     case Choices.HOURSOFOPERATION:
                         //set the hours of operation here
-                        cr.HoursOfOperation = Console.ReadLine();
+                        int hoursOfOperation = 0;
+                        while (hoursOfOperation == 0)
+                        {
+                            Int32.TryParse(Console.ReadLine(), out hoursOfOperation);
+                            cr.HoursOfOperation = hoursOfOperation;
+                        }
                         break;
                     case Choices.NUMBEROFWINDOWS:
                         //set the number of windows here
-                        cr.NumberOfWindows = Console.ReadLine();
+                        int numberOfWindows = 0;
+                        while (numberOfWindows == 0)
+                        {
+                            Int32.TryParse(Console.ReadLine(), out numberOfWindows);
+                            cr.NumberOfWindows = numberOfWindows;
+                        }
                         break;
                     case Choices.CHECKOUTDURATION:
                         //set the expected value of the checkout duration here
-                        cr.CheckoutDuration = Console.ReadLine();
+                        double checkoutDuration = 0.0;
+                        while (checkoutDuration == 0.0)
+                        {
+                            Double.TryParse(Console.ReadLine(), out checkoutDuration);
+                            cr.CheckoutDuration = checkoutDuration;
+                        }
                         break;
                     case Choices.RUNSIMULATION:
                         //run the simulation
-
+                        cr.DoSimulation();
                         break;
                 }
                 
