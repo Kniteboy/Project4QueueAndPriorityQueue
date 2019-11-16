@@ -29,16 +29,19 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         /// </summary>
         static void Main()
         {
+          
             ConventionRegistration cr = new ConventionRegistration();
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.BackgroundColor = ConsoleColor.White;
+            #region menu setup
             Menu menu = new Menu("Convention Registration");
             menu = menu + "Set the number of Registrants" + "Set the number of hours of operation" + "Set the number of windows" + "Set the expected checkout duration" + "Run the simulation" + "End the program";
-
+            #endregion 
 
             Choices choice = new Choices();
             while(choice != Choices.QUIT)
             {
+               
                 switch (choice)
                 {
                     case Choices.NUMBEROFREGISTRANTS:
@@ -57,7 +60,12 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                         //set the expected value of the checkout duration here
                         cr.CheckoutDuration = Console.ReadLine();
                         break;
+                    case Choices.RUNSIMULATION:
+                        //run the simulation
+
+                        break;
                 }
+                
                 choice = (Choices)menu.GetChoice();
             }//end while(choice != Choices.QUIT)
 

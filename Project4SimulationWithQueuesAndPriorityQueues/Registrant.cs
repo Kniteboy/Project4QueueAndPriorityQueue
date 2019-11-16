@@ -21,13 +21,11 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
     /// </summary>
     public class Registrant
     {
-        /// <summary>
-        /// A Random object to handle all the random events in the registrant class
-        /// </summary>
+        /// <summary>A Random object to handle all the random events in the registrant class</summary>
         private static Random r = new Random();
 
-       
-        
+        #region properties
+
         /// <summary>
         /// Used to give each registrant a number (generated from a Poisson distribution)
         /// </summary>
@@ -61,6 +59,9 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             }
         }
 
+        #endregion properties
+
+        #region constructor
         /// <summary>
         /// The default constructor which states that the expected number of registrants is 1000 people
         /// </summary>
@@ -84,8 +85,11 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             RegistrantNumber = Poisson(ExpectedNumberOfPeople);   //Allows the registration convention center to change the expected number of people 
         }
 
+        #endregion constructor
 
 
+
+        #region distribution code
         /// <summary>
         /// The method generating numbers from a Poisson distribution for the registrant's display number
         /// </summary>
@@ -112,7 +116,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         {
             return -ExpectedValue * Math.Log(Registrant.r.NextDouble(), Math.E);
         }
-
+        #endregion distribution code
 
     }
 }
