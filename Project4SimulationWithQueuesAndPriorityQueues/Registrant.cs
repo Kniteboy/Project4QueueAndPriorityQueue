@@ -79,10 +79,10 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         /// <param name="arrivalTime">the arrival time of the registrant</param>
         /// <param name="departtureTime">the departure time of the registrant</param>
         /// <param name="expectedRegistrationTime">the expected registration time of the registrant</param>
-        public Registrant(int registrantNumber, TimeSpan arrivalTime, int expectedRegistrationTime)
+        public Registrant(int registrantNumber, TimeSpan arrivalTime, double expectedRegistrationTime)
         {
             ArrivalTime = arrivalTime;
-            Interval = new TimeSpan(0, (int)(expectedRegistrationTime + NegativeExponential(3)), 0); //Minimum time is one minute thirty seconds and the expected time is four minute and thirty seconds
+            Interval = new TimeSpan(0, (int) (expectedRegistrationTime + NegativeExponential(3)), 0); //Minimum time is one minute thirty seconds and the expected time is four minute and thirty seconds
             DepartureTime = ArrivalTime + Interval;
             RegistrantNumber = registrantNumber;   //Sets the specified registrant number
         }//end Registrant(int registrantNumber, TimeSpan arrivalTime, int expectedRegistrationTime)
