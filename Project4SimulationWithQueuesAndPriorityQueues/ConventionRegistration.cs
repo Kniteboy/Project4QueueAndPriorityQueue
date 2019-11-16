@@ -108,9 +108,24 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         /// </summary>
         public void RunSimulation()
         {
+            while (PQ.Count > 0)
+            {
+                Console.Clear();
+                Console.SetCursorPosition((Console.WindowWidth - 20) / 2, 1);
+                Console.WriteLine("Registration Windows");
+                Console.SetCursorPosition((Console.WindowWidth - 20) / 2, 2);
+                Console.WriteLine("--------------------");
 
+                for (int i = 0; i < numberOfWindows; i++)
+                {
+
+                } //end for (int i = 0; i < numberOfWindows; i++)
+            }
         } //end RunSimulation()
 
+        /// <summary>
+        /// Generates the events for registrant arrival and departure times.
+        /// </summary>
         public void GenerateEvents()
         {
             TimeSpan start;
@@ -125,7 +140,6 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 PQ.Enqueue(new Event(EVENTTYPE.ARRIVAL, openTime.Add(temp.ArrivalTime), temp));
                 PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(temp.DepartureTime), temp));
             } //end for (int i = 0; i < actualNumberOfRegistrants; i++)
-
         } //end GenerateEvents()
 
         #region Random Distributions
