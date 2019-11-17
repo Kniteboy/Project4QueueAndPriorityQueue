@@ -143,10 +143,27 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         } //end RunSimulation()
 
         #region Utility Methods
-        /// <summary>
-        /// Finds the longest registration line.
+        ///</summary>
+        /// Finds the shortest registration line.
         /// </summary>
-        /// <returns>The amount in the longest line</returns>
+        /// <returns>Position of the shortest registration line</returns>
+        public int ShortestLine()
+        {
+            int shortestLine = 0;
+            for(int i = 0; i < numberOfWindows; i++)
+            {
+                if (regLines[i].Count < regLines[shortestLine].Count)
+                {
+                    shortestLine = i;
+                }
+            }
+            return shortestLine;
+        }//end ShortestLine()
+
+        /// <summary>
+        /// Finds the length of the longest registration line.
+        /// </summary>
+        /// <returns>Length of the longest registration line</returns>
         public int LongestLine()
         {
             int longestLine = 0;
@@ -189,7 +206,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             {
                 for (int j = 0; j < numberOfWindows; j++)
                 {
-                    if (!(queues[i][j] == null))
+                    if (!(queues[i][j].RegistrantNumber == 0))
                     {
                         Console.Write($"\t{queues[i][j].RegistrantNumber}");
                     } //end 
