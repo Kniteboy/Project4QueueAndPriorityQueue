@@ -29,7 +29,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         private int actualNumberOfRegistrants;
         private DateTime openTime = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 8, 0, 0);
         private DateTime closingTime = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 18, 0, 0);
-
+        
         #region Properties
         private int expectedNumberOfRegistrants;
 
