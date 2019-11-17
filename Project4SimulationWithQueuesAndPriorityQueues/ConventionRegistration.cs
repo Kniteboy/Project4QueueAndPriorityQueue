@@ -118,10 +118,20 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 while (!(PQ.Peek().Type == EVENTTYPE.DEPARTURE))
                 {
                     int shortestLine = ShortestLine();
+                    
+                    if (regLines[shortestLine].Count == 0)
+                    {
+                        PQ.Peek().Registrant.Interval = new TimeSpan(0, (int)(checkoutDuration + NegativeExponential(3)), 0);
+                        PQ.Peek().Registrant.DepartureTime = PQ.Peek().Registrant.ArrivalTime + PQ.Peek().Registrant.Interval;
+                    }//if(shortestLine == 0)
                     regLines[shortestLine].Enqueue(PQ.Peek().Registrant);
-                    PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(), PQ.Peek().Registrant));
-                    Console.SetCursorPosition(0, 0);
+
                     PQ.Dequeue();
+
+                    PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(PQ.Peek().Registrant.DepartureTime), PQ.Peek().Registrant));
+
+                    Console.SetCursorPosition(0, 0);
+                   
 
                     DrawLines();
                 } //end while (!(PQ.Peek().Type == EVENTTYPE.DEPARTURE))
@@ -132,10 +142,17 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                         if (regLines[i].Count > 0 && PQ.Peek().Registrant.RegistrantNumber == regLines[i].Peek().RegistrantNumber)
                         {
                             regLines[i].Dequeue();
+                            if(regLines[i].Count > 0)
+                            {
+                                regLines[i].Peek().Interval = new TimeSpan(0, (int)(checkoutDuration + NegativeExponential(3)), 0);
+                                regLines[i].Peek().DepartureTime = regLines[i].Peek().ArrivalTime + regLines[i].Peek().Interval;
+                            }//end if(regLines[i].Count > 0)
+
                         } //end if (PQ.Peek().Registrant.RegistrantNumber == regLines[0].Peek().RegistrantNumber)
                     } //end for (int i = 0; i < numberOfWindows; i++)
 
                     PQ.Dequeue();
+
                     DrawLines();
                 } //end if (PQ.Peek().Type == EVENTTYPE.DEPARTURE)
             }

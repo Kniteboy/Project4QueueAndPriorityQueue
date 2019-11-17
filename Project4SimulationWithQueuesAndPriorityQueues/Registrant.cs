@@ -27,18 +27,29 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         /// Used to give each registrant a number (generated from a Poisson distribution)
         /// </summary>
 
-        public int RegistrantNumber { get; set;}
+        public int RegistrantNumber { get; set; }
 
+        /// <summary>
+        /// The interval/duration backing store each registrant takes at the registration table
+        /// </summary>
+        private TimeSpan interval;
         /// <summary>
         /// The interval/duration each registrant takes at the registration table
         /// </summary>
-        public TimeSpan Interval { get; set; }
-        
+        public TimeSpan Interval
+        {
+            get => interval;
+            set
+            {
+                interval = value;
+            }
+        }
+
         /// <summary>
         /// The arrival time of each registrant to the registration line
         /// </summary>
 
-        public TimeSpan ArrivalTime{get; set;}
+        public TimeSpan ArrivalTime { get; set; }
 
 
         /// <summary>
@@ -53,7 +64,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             get => departureTime;
             set
             {
-                departureTime = value;  //add the interval to the arrival time
+                departureTime = value; //add the interval to the arrival time
             }
         }//end TimeSpan DepartureTime
 
@@ -65,9 +76,9 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         /// </summary>
         public Registrant()
         {
-            ArrivalTime = new TimeSpan(0,0,0);
-            Interval = new TimeSpan(0, (int)(1.5 + NegativeExponential(3)), 0);
-            DepartureTime = new TimeSpan();
+            ArrivalTime = new TimeSpan(0, 0, 0);
+            //Interval = new TimeSpan(0, (int)(1.5 + NegativeExponential(3)), 0);
+            //DepartureTime = new TimeSpan();
             RegistrantNumber = 0;   //The default registration number will be zero
         }//end Registrant()
 
@@ -82,8 +93,8 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         public Registrant(int registrantNumber, TimeSpan arrivalTime, double expectedRegistrationTime)
         {
             ArrivalTime = arrivalTime;
-            Interval = new TimeSpan(0, (int) (expectedRegistrationTime + NegativeExponential(3)), 0); //Minimum time is one minute thirty seconds and the expected time is four minute and thirty seconds
-            DepartureTime = ArrivalTime + Interval;
+            //Interval = new TimeSpan(0, (int) (expectedRegistrationTime + NegativeExponential(3)), 0); //Minimum time is one minute thirty seconds and the expected time is four minute and thirty seconds
+            //DepartureTime = ArrivalTime + Interval;
             RegistrantNumber = registrantNumber;   //Sets the specified registrant number
         }//end Registrant(int registrantNumber, TimeSpan arrivalTime, int expectedRegistrationTime)
 
@@ -98,7 +109,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         /// </summary>
         /// <param name="ExpectedValue">The expected time taken by each registrant</param>
         /// <returns>The time taken at the registration booth</returns>
-        private static double  NegativeExponential(double ExpectedValue)
+        private static double NegativeExponential(double ExpectedValue)
         {
             return -ExpectedValue * Math.Log(Registrant.r.NextDouble(), Math.E);
         }//end NegativeExponential(double ExpectedValue)
