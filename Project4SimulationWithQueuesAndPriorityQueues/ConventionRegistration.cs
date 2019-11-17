@@ -109,44 +109,117 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         /// </summary>
         public void RunSimulation()
         {
-            string windows = "";
-            string windowOutput = "";
+            for (int i = 0; i < numberOfWindows; i++)
+            {
+                regLines.Add(new Queue<Registrant>());
+            } //end for (int i = 0; i < numberOfWindows; i++)
 
             while (PQ.Count > 0)
             {
-                windows = "";
-                windowOutput = "";
-                Console.Clear();
-
-                Console.WriteLine("\t\t\tRegistration Windows");
-                Console.WriteLine("\t\t\t--------------------\n");
-
-                for (int i = 0; i < numberOfWindows; i++)
+                while (!(PQ.Peek().Type == EVENTTYPE.DEPARTURE))
                 {
-                    windows += $"\tW {i + 1}";
-                } //end for (int i = 0; i < numberOfWindows; i++)
+                    int shortestLine = ShortestLine();
+                    regLines[shortestLine].Enqueue(PQ.Peek().Registrant);
+                    PQ.Dequeue();
 
-                Console.WriteLine(windows);
-
-                for (int i = 0; i < maxLineCount; i++)
+                    DrawLines();
+                } //end while (!(PQ.Peek().Type == EVENTTYPE.DEPARTURE))
+                if (PQ.Peek().Type == EVENTTYPE.DEPARTURE)
                 {
-                    for (int j = 0; j < numberOfWindows; j++)
+                    for (int i = 0; i < numberOfWindows; i++)
                     {
-                        if (PQ.Peek() == null)
+                        if (PQ.Peek().Registrant.RegistrantNumber == regLines[i].Peek().RegistrantNumber)
                         {
-                            windowOutput = "    ";
-                        } //end if (PQ.Peek() == null)
-                        else
-                        {
-                            windowOutput = $"{}";
-                        }
-                        Console.Write("\n\t");
-                    }
-                } //end for (int i = 0; i < maxLineCount; i++)
+                            regLines[i].Dequeue();
+                        } //end if (PQ.Peek().Registrant.RegistrantNumber == regLines[0].Peek().RegistrantNumber)
+                    } //end for (int i = 0; i < numberOfWindows; i++)
+
+                    PQ.Dequeue();
+                    DrawLines();
+                } //end if (PQ.Peek().Type == EVENTTYPE.DEPARTURE)
 
                 Thread.Sleep(1000);
             }
         } //end RunSimulation()
+
+        #region Utility Methods
+        /// <summary>
+        /// Finds the shortest registration line.
+        /// </summary>
+        /// <returns>Position of the shortest registration line</returns>
+        public int ShortestLine()
+        {
+            int shortestLine = 0;
+            for(int i = 0; i < numberOfWindows; i++)
+            {
+                if (regLines[i].Count < regLines[shortestLine].Count)
+                {
+                    shortestLine = i;
+                }
+            }
+            return shortestLine;
+        }//end ShortestLine()
+
+        /// <summary>
+        /// Finds the longest registration line.
+        /// </summary>
+        /// <returns>Position of the longest registration line</returns>
+        public int LongestLine()
+        {
+            int longestLine = 0;
+            for (int i = 0; i < numberOfWindows; i++)
+            {
+                if (regLines[i].Count > regLines[longestLine].Count)
+                {
+                    longestLine = i;
+                }
+            }
+            return longestLine;
+        }//end LongestLine()
+
+        /// <summary>
+        /// Draws the registration lines in the console.
+        /// </summary>
+        public void DrawLines()
+        {
+            List<List<Registrant>> queues = new List<List<Registrant>>();
+
+            string headerText = "";
+
+            headerText += "\n\t\t\tRegistration Windows";
+            headerText += "\n\t\t\t--------------------\n\n";
+
+            for (int i = 0; i < numberOfWindows; i++)
+            {
+                headerText += $"\tW {i + 1}";
+            } //end for (int i = 0; i < numberOfWindows; i++)
+
+            Console.Clear();
+            Console.WriteLine(headerText);
+
+            for (int i = 0; i < numberOfWindows; i++)
+            {
+                queues.Add(new List<Registrant>(regLines[i].ToArray()));
+            } //end for (int i = 0; i < numberOfWindows; i++)
+
+            for (int i = 0; i < LongestLine(); i++)
+            {
+                for (int j = 0; j < numberOfWindows; j++)
+                {
+                    if (!(queues[i][j] == null))
+                    {
+                        Console.Write($"\t{queues[i][j].RegistrantNumber}");
+                    } //end 
+                    else
+                    {
+                        Console.Write($"\t    ");
+                    } //end else
+                } //end 
+                Console.Write("\n");
+            } //end 
+
+        } //end DrawLines()
+        #endregion
 
         /// <summary>
         /// Generates the events for registrant arrival and departure times.
