@@ -118,7 +118,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             {
                 while (!(PQ.Peek().Type == EVENTTYPE.DEPARTURE))
                 {
-                    int shortestLines = LongestLine();
+                    int shortestLine = ShortestLine();
                     regLines[shortestLine].Enqueue(PQ.Peek().Registrant);
                     PQ.Dequeue();
 
@@ -171,7 +171,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             {
                 if (regLines[i].Count > longestLine)
                 {
-                    longestLine = regLines.Count;
+                    longestLine = regLines[i].Count;
                 }
             }
             return longestLine;
@@ -202,11 +202,12 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 queues.Add(new List<Registrant>(regLines[i].ToArray()));
             } //end for (int i = 0; i < numberOfWindows; i++)
 
-            for (int i = 0; i < LongestLine(); i++)
+            int longestLine = LongestLine();
+            for (int i = 0; i < longestLine; i++)
             {
                 for (int j = 0; j < numberOfWindows; j++)
                 {
-                    if (!(queues[i][j].RegistrantNumber == 0))
+                    if (!(queues[j][i].RegistrantNumber == 0))
                     {
                         Console.Write($"\t{queues[i][j].RegistrantNumber}");
                     } //end 
