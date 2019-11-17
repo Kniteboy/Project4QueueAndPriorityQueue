@@ -128,7 +128,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 {
                     for (int i = 0; i < numberOfWindows; i++)
                     {
-                        if (PQ.Peek().Registrant.RegistrantNumber == regLines[i].Peek().RegistrantNumber)
+                        if (regLines[i].Count > 0 && PQ.Peek().Registrant.RegistrantNumber == regLines[i].Peek().RegistrantNumber)
                         {
                             regLines[i].Dequeue();
                         } //end if (PQ.Peek().Registrant.RegistrantNumber == regLines[0].Peek().RegistrantNumber)
@@ -137,13 +137,11 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                     PQ.Dequeue();
                     DrawLines();
                 } //end if (PQ.Peek().Type == EVENTTYPE.DEPARTURE)
-
-                Thread.Sleep(1000);
             }
         } //end RunSimulation()
 
         #region Utility Methods
-        ///</summary>
+        /// <summary>
         /// Finds the shortest registration line.
         /// </summary>
         /// <returns>Position of the shortest registration line</returns>
@@ -167,7 +165,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         public int LongestLine()
         {
             int longestLine = 0;
-            for(int i = 0; i < numberOfWindows; i++)
+            for (int i = 0; i < numberOfWindows; i++)
             {
                 if (regLines[i].Count > longestLine)
                 {
@@ -175,7 +173,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 }
             }
             return longestLine;
-        }//end longestLine()
+        }//end LongestLine()
 
         /// <summary>
         /// Draws the registration lines in the console.
@@ -202,14 +200,21 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 queues.Add(new List<Registrant>(regLines[i].ToArray()));
             } //end for (int i = 0; i < numberOfWindows; i++)
 
-            int longestLine = LongestLine();
-            for (int i = 0; i < longestLine; i++)
+            for (int i = 0; i < queues.Count; i++)
+            {
+                while (queues[i].Count < LongestLine())
+                {
+                    queues[i].Add(new Registrant());
+                }
+            }
+
+            for (int i = 0; i < LongestLine(); i++)
             {
                 for (int j = 0; j < numberOfWindows; j++)
                 {
                     if (!(queues[j][i].RegistrantNumber == 0))
                     {
-                        Console.Write($"\t{queues[i][j].RegistrantNumber}");
+                        Console.Write($"\t{queues[j][i].RegistrantNumber:0000}");
                     } //end 
                     else
                     {
@@ -218,7 +223,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 } //end 
                 Console.Write("\n");
             } //end 
-
+            Thread.Sleep(1000);
         } //end DrawLines()
         #endregion
 
