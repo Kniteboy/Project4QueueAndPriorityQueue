@@ -19,7 +19,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
     /// <summary>
     /// The three different event types for the registration event
     /// </summary>
-    enum EVENTTYPE {ARRIVAL, DEPARTURE, LINESELECTION };
+    enum EVENTTYPE {ARRIVAL, DEPARTURE};
     /// <summary>
     /// The class associated with associating an event with a registrant
     /// </summary>
