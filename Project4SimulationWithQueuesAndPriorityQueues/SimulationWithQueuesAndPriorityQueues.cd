@@ -24,7 +24,7 @@
   <Class Name="Project4SimulationWithQueuesAndPriorityQueues.Registrant">
     <Position X="0.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAIAAIACECAAAAAAAAAAAAAJAAgAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAIAAIACEACAAAAAAAAAAAAJAAgAAAA=</HashCode>
       <FileName>Registrant.cs</FileName>
     </TypeIdentifier>
   </Class>

@@ -113,6 +113,8 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         {
             return -ExpectedValue * Math.Log(Registrant.r.NextDouble(), Math.E);
         }//end NegativeExponential(double ExpectedValue)
+
+
         #endregion distribution code
 
     }
