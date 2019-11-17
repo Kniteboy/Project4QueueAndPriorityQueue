@@ -130,6 +130,8 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
 
                     PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(PQ.Peek().Registrant.DepartureTime), PQ.Peek().Registrant));
 
+
+
                     Console.SetCursorPosition(0, 0);
                    
 
@@ -139,6 +141,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 {
                     for (int i = 0; i < numberOfWindows; i++)
                     {
+                        
                         if (regLines[i].Count > 0 && PQ.Peek().Registrant.RegistrantNumber == regLines[i].Peek().RegistrantNumber)
                         {
                             regLines[i].Dequeue();
