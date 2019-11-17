@@ -161,17 +161,17 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         }//end ShortestLine()
 
         /// <summary>
-        /// Finds the longest registration line.
+        /// Finds the length of the longest registration line.
         /// </summary>
-        /// <returns>Position of the longest registration line</returns>
+        /// <returns>Length of the longest registration line</returns>
         public int LongestLine()
         {
             int longestLine = 0;
             for (int i = 0; i < numberOfWindows; i++)
             {
-                if (regLines[i].Count > regLines[longestLine].Count)
+                if (regLines[i].Count > longestLine)
                 {
-                    longestLine = i;
+                    longestLine = regLines.Count;
                 }
             }
             return longestLine;
@@ -206,7 +206,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             {
                 for (int j = 0; j < numberOfWindows; j++)
                 {
-                    if (!(queues[i][j] == null))
+                    if (!(queues[i][j].RegistrantNumber == 0))
                     {
                         Console.Write($"\t{queues[i][j].RegistrantNumber}");
                     } //end 
