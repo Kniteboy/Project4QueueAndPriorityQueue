@@ -118,7 +118,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             {
                 while (!(PQ.Peek().Type == EVENTTYPE.DEPARTURE))
                 {
-                    int shortestLine = ShortestLine();
+                    int shortestLines = LongestLine();
                     regLines[shortestLine].Enqueue(PQ.Peek().Registrant);
                     PQ.Dequeue();
 
@@ -144,38 +144,21 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
 
         #region Utility Methods
         /// <summary>
-        /// Finds the shortest registration line.
-        /// </summary>
-        /// <returns>Position of the shortest registration line</returns>
-        public int ShortestLine()
-        {
-            int shortestLine = 0;
-            for(int i = 0; i < numberOfWindows; i++)
-            {
-                if (regLines[i].Count < regLines[shortestLine].Count)
-                {
-                    shortestLine = i;
-                }
-            }
-            return shortestLine;
-        }//end ShortestLine()
-
-        /// <summary>
         /// Finds the longest registration line.
         /// </summary>
-        /// <returns>Position of the longest registration line</returns>
+        /// <returns>The amount in the longest line</returns>
         public int LongestLine()
         {
             int longestLine = 0;
-            for (int i = 0; i < numberOfWindows; i++)
+            for(int i = 0; i < numberOfWindows; i++)
             {
-                if (regLines[i].Count > regLines[longestLine].Count)
+                if (regLines[i].Count > longestLine)
                 {
-                    longestLine = i;
+                    longestLine = regLines.Count;
                 }
             }
             return longestLine;
-        }//end LongestLine()
+        }//end longestLine()
 
         /// <summary>
         /// Draws the registration lines in the console.
