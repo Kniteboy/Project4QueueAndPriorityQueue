@@ -28,12 +28,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         private List<Queue<Registrant>> regLines;
         private int actualNumberOfRegistrants;
         private DateTime openTime = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 8, 0, 0);
-<<<<<<< HEAD
-
-=======
-        private DateTime closingTime = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 18, 0, 0);
         
->>>>>>> 08d565caf63889c1abba380d3b7c6328c23efd16
         #region Properties
         private int expectedNumberOfRegistrants;
 
