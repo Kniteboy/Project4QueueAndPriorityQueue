@@ -28,8 +28,12 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         private List<Queue<Registrant>> regLines;
         private int actualNumberOfRegistrants;
         private DateTime openTime = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 8, 0, 0);
-        private DateTime closingTime = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 18, 0, 0);
+<<<<<<< HEAD
 
+=======
+        private DateTime closingTime = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 18, 0, 0);
+        
+>>>>>>> 08d565caf63889c1abba380d3b7c6328c23efd16
         #region Properties
         private int expectedNumberOfRegistrants;
 
@@ -120,6 +124,8 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 {
                     int shortestLine = ShortestLine();
                     regLines[shortestLine].Enqueue(PQ.Peek().Registrant);
+                    PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(), PQ.Peek().Registrant));
+                    Console.SetCursorPosition(0, 0);
                     PQ.Dequeue();
 
                     DrawLines();
@@ -206,7 +212,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 {
                     queues[i].Add(new Registrant());
                 }
-            }
+            } //end for (int i = 0; i < queues.Count; i++)
 
             for (int i = 0; i < LongestLine(); i++)
             {
@@ -242,7 +248,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 Registrant temp = new Registrant(i, start, checkoutDuration);
 
                 PQ.Enqueue(new Event(EVENTTYPE.ARRIVAL, openTime.Add(temp.ArrivalTime), temp));
-                PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(temp.DepartureTime), temp));
+                //PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(temp.DepartureTime), temp));
             } //end for (int i = 0; i < actualNumberOfRegistrants; i++)
         } //end GenerateEvents()
 
