@@ -121,39 +121,43 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                     
                     if (regLines[shortestLine].Count == 0)
                     {
+                        
                         PQ.Peek().Registrant.Interval = new TimeSpan(0, (int)(checkoutDuration + NegativeExponential(3)), 0);
                         PQ.Peek().Registrant.DepartureTime = PQ.Peek().Registrant.ArrivalTime + PQ.Peek().Registrant.Interval;
-                    }//if(shortestLine == 0)
+                        
+                        PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(PQ.Peek().Registrant.DepartureTime), PQ.Peek().Registrant));
+                    }//if(regLines[shortestLine].Count == 0)
                     regLines[shortestLine].Enqueue(PQ.Peek().Registrant);
-
-                    PQ.Dequeue();
-
-                    PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(PQ.Peek().Registrant.DepartureTime), PQ.Peek().Registrant));
-
-
-
+                    
                     Console.SetCursorPosition(0, 0);
                    
-
                     DrawLines();
+                    Console.Write($"{PQ.Peek().Registrant.RegistrantNumber} arrived at {PQ.Peek().Registrant.ArrivalTime}");
+                    Console.ReadKey();
+                    PQ.Dequeue();
                 } //end while (!(PQ.Peek().Type == EVENTTYPE.DEPARTURE))
                 if (PQ.Peek().Type == EVENTTYPE.DEPARTURE)
                 {
+                  
                     for (int i = 0; i < numberOfWindows; i++)
                     {
                         
                         if (regLines[i].Count > 0 && PQ.Peek().Registrant.RegistrantNumber == regLines[i].Peek().RegistrantNumber)
                         {
+                            Console.Write($"{regLines[i].Peek().RegistrantNumber} departed at {regLines[i].Peek().DepartureTime}");
+                            Console.ReadKey();
                             regLines[i].Dequeue();
                             if(regLines[i].Count > 0)
                             {
                                 regLines[i].Peek().Interval = new TimeSpan(0, (int)(checkoutDuration + NegativeExponential(3)), 0);
                                 regLines[i].Peek().DepartureTime = regLines[i].Peek().ArrivalTime + regLines[i].Peek().Interval;
+                                PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(regLines[i].Peek().DepartureTime), regLines[i].Peek()));
                             }//end if(regLines[i].Count > 0)
 
                         } //end if (PQ.Peek().Registrant.RegistrantNumber == regLines[0].Peek().RegistrantNumber)
+                        
                     } //end for (int i = 0; i < numberOfWindows; i++)
-
+                    
                     PQ.Dequeue();
 
                     DrawLines();
@@ -226,7 +230,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 while (queues[i].Count < LongestLine())
                 {
                     queues[i].Add(new Registrant());
-                }
+                }//end while(queues[i].Count < LongestLine())
             } //end for (int i = 0; i < queues.Count; i++)
 
             for (int i = 0; i < LongestLine(); i++)
@@ -236,14 +240,14 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                     if (!(queues[j][i].RegistrantNumber == 0))
                     {
                         Console.Write($"\t{queues[j][i].RegistrantNumber:0000}");
-                    } //end 
+                    } //end if (!(queues[j][i].RegistrantNumber == 0))
                     else
                     {
                         Console.Write($"\t    ");
                     } //end else
-                } //end 
+                } //end for (int j = 0; j < numberOfWindows; j++)
                 Console.Write("\n");
-            } //end 
+            } //end for (int i = 0; i < LongestLine(); i++)
             Thread.Sleep(1000);
         } //end DrawLines()
         #endregion
