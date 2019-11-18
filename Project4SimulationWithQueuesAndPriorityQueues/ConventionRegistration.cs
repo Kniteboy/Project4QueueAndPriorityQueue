@@ -118,25 +118,25 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
 
             while (PQ.Count > 0)
             {
-                while (!(PQ.Peek().Type == EVENTTYPE.DEPARTURE))
+                while (PQ.Count > 0 && !(PQ.Peek().Type == EVENTTYPE.DEPARTURE))
                 {
                     int shortestLine = ShortestLine();
                     
                     if (regLines[shortestLine].Count == 0)
                     {
-                        if(PQ.Count > 2)
-                        {
                             PQ.Peek().Registrant.Interval = new TimeSpan(0, (int)(checkoutDuration + NegativeExponential(3)), 0);
                             PQ.Peek().Registrant.DepartureTime = PQ.Peek().Registrant.ArrivalTime + PQ.Peek().Registrant.Interval;
 
                             PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(PQ.Peek().Registrant.DepartureTime), PQ.Peek().Registrant));
-                        }
+                            eventCount++;
+                
                        
                     }//end if(regLines[shortestLine].Count == 0)
-                    if(PQ.Count > 2)
-                    {
-                        regLines[shortestLine].Enqueue(PQ.Peek().Registrant);
-                    }//end if(PQ.Count > 1)
+                   // if(PQ.Count > 0)
+                    //{
+                   regLines[shortestLine].Enqueue(PQ.Peek().Registrant);
+                   arrivalCount++;
+                    //}//end if(PQ.Count > 0)
                     
                     
                     Console.SetCursorPosition(0, 0);
@@ -147,13 +147,9 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
 
                  
                     PQ.Dequeue();
-                   
-
-
-                    eventCount++;
-                    arrivalCount++;
+                    
                 } //end while (!(PQ.Peek().Type == EVENTTYPE.DEPARTURE))
-                if (PQ.Peek().Type == EVENTTYPE.DEPARTURE)
+                if (PQ.Count > 0 && PQ.Peek().Type == EVENTTYPE.DEPARTURE)
                 {
                   
                     for (int i = 0; i < numberOfWindows; i++)
@@ -285,7 +281,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             Console.WriteLine($"Events Processed So Far: {eventCount}".PadRight(32) + $"Arrivals: {arrivalCount}".PadRight(16) + $"Departures: {departureCount}".PadRight(15));
             Console.WriteLine($"Number of Registrants: {actualNumberOfRegistrants}".PadRight(40) + $"Checkout Duration: {checkoutDuration}".PadRight(25));
             Console.WriteLine($"Hours of operation: {hoursOfOperation}");
-            Thread.Sleep(50);
+            Thread.Sleep(500);
         } //end DrawLines()
         #endregion
 
