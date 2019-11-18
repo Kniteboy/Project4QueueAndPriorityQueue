@@ -9,6 +9,7 @@
 //	Copyright:		Edmund Yong, 2019
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+using MessagingPhone;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -118,7 +119,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
 
             while (PQ.Count > 0 || !AllQueuesEmpty())
             {
-                while (PQ.Count > 0 && !(PQ.Peek().Type == EVENTTYPE.DEPARTURE))
+                while (PQ.Count > 0 && PQ.Peek().Type == EVENTTYPE.ARRIVAL)
                 {
                     int shortestLine = ShortestLine();
                     
@@ -155,6 +156,8 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                         {
                             TimeSpan previousPerson = regLines[i].Peek().DepartureTime;         //test code to get right values
                             regLines[i].Dequeue();
+                            eventCount++;
+                            departureCount++;
                             DrawLines();
                             if (regLines[i].Count > 0)
                             {
@@ -168,13 +171,13 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                     } //end for (int i = 0; i < numberOfWindows; i++)
                     
                     PQ.Dequeue();
-                    eventCount++;
-                    departureCount++;
                     DrawLines();
                 } //end if (PQ.Peek().Type == EVENTTYPE.DEPARTURE)
              
             }
             Console.WriteLine("Simulation done.");
+            Messaging message = new Messaging();
+
             Console.ReadLine();
         } //end RunSimulation()
 
@@ -276,7 +279,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             Console.WriteLine($"Events Processed So Far: {eventCount}".PadRight(32) + $"Arrivals: {arrivalCount}".PadRight(16) + $"Departures: {departureCount}".PadRight(15));
             Console.WriteLine($"Number of Registrants: {actualNumberOfRegistrants}".PadRight(40) + $"Checkout Duration: {checkoutDuration}".PadRight(25));
             Console.WriteLine($"Hours of operation: {hoursOfOperation}");
-            //Thread.Sleep(5);
+            Thread.Sleep(500);
         } //end DrawLines()
         #endregion
 
@@ -312,7 +315,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             {
                 start = new TimeSpan(0, r.Next(10 * 60), 0);
 
-                Registrant temp = new Registrant(i, start, checkoutDuration);
+                Registrant temp = new Registrant(i, start);
 
                 PQ.Enqueue(new Event(EVENTTYPE.ARRIVAL, openTime.Add(temp.ArrivalTime), temp));
                 //PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(temp.DepartureTime), temp));

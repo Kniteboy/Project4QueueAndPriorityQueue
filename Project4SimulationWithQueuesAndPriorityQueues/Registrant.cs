@@ -77,8 +77,6 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         public Registrant()
         {
             ArrivalTime = new TimeSpan(0, 0, 0);
-            //Interval = new TimeSpan(0, (int)(1.5 + NegativeExponential(3)), 0);
-            //DepartureTime = new TimeSpan();
             RegistrantNumber = 0;   //The default registration number will be zero
         }//end Registrant()
 
@@ -88,13 +86,9 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         /// </summary>
         /// <param name="registrantNumber">the registrant's number</param>
         /// <param name="arrivalTime">the arrival time of the registrant</param>
-        /// <param name="departtureTime">the departure time of the registrant</param>
-        /// <param name="expectedRegistrationTime">the expected registration time of the registrant</param>
-        public Registrant(int registrantNumber, TimeSpan arrivalTime, double expectedRegistrationTime)
+        public Registrant(int registrantNumber, TimeSpan arrivalTime)
         {
             ArrivalTime = arrivalTime;
-            //Interval = new TimeSpan(0, (int) (expectedRegistrationTime + NegativeExponential(3)), 0); //Minimum time is one minute thirty seconds and the expected time is four minute and thirty seconds
-            //DepartureTime = ArrivalTime + Interval;
             RegistrantNumber = registrantNumber;   //Sets the specified registrant number
         }//end Registrant(int registrantNumber, TimeSpan arrivalTime, int expectedRegistrationTime)
 
