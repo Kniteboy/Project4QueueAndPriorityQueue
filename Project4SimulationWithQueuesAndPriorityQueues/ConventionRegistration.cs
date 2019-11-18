@@ -28,6 +28,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         private List<Queue<Registrant>> regLines;
         private int actualNumberOfRegistrants;
         private DateTime openTime = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 8, 0, 0);
+        int longestQueueLine = 0;
         int eventCount = 0;
         int arrivalCount = 0;
         int departureCount = 0;
@@ -123,21 +124,32 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                     
                     if (regLines[shortestLine].Count == 0)
                     {
-                        
-                        PQ.Peek().Registrant.Interval = new TimeSpan(0, (int)(checkoutDuration + NegativeExponential(3)), 0);
-                        PQ.Peek().Registrant.DepartureTime = PQ.Peek().Registrant.ArrivalTime + PQ.Peek().Registrant.Interval;
-                        
-                        PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(PQ.Peek().Registrant.DepartureTime), PQ.Peek().Registrant));
+                        if(PQ.Count > 2)
+                        {
+                            PQ.Peek().Registrant.Interval = new TimeSpan(0, (int)(checkoutDuration + NegativeExponential(3)), 0);
+                            PQ.Peek().Registrant.DepartureTime = PQ.Peek().Registrant.ArrivalTime + PQ.Peek().Registrant.Interval;
+
+                            PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(PQ.Peek().Registrant.DepartureTime), PQ.Peek().Registrant));
+                        }
+                       
                     }//end if(regLines[shortestLine].Count == 0)
-                    regLines[shortestLine].Enqueue(PQ.Peek().Registrant);
+                    if(PQ.Count > 2)
+                    {
+                        regLines[shortestLine].Enqueue(PQ.Peek().Registrant);
+                    }//end if(PQ.Count > 1)
+                    
                     
                     Console.SetCursorPosition(0, 0);
                    
     
                     DrawLines();
 
-                    
+
+                 
                     PQ.Dequeue();
+                   
+
+
                     eventCount++;
                     arrivalCount++;
                 } //end while (!(PQ.Peek().Type == EVENTTYPE.DEPARTURE))
@@ -169,7 +181,10 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                     departureCount++;
                     DrawLines();
                 } //end if (PQ.Peek().Type == EVENTTYPE.DEPARTURE)
+                
             }
+            Console.WriteLine("Simulation done.");
+            Console.ReadLine();
         } //end RunSimulation()
 
         #region Utility Methods
@@ -202,6 +217,10 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 if (regLines[i].Count > longestLine)
                 {
                     longestLine = regLines[i].Count;
+                    if(longestQueueLine < longestLine)
+                    {
+                        longestQueueLine = longestLine;
+                    }
                 }
             }
             return longestLine;
@@ -261,12 +280,12 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 Console.Write("\n");
             } //end for (int i = 0; i < LongestLine(); i++)
             Console.WriteLine("So Far: -------------------------------------------------------------------------");
-            Console.WriteLine($"Longest Queue So Far: {LongestLine()}");
+            Console.WriteLine($"Longest Queue So Far: {longestQueueLine}");
             Console.WriteLine();
             Console.WriteLine($"Events Processed So Far: {eventCount}".PadRight(32) + $"Arrivals: {arrivalCount}".PadRight(16) + $"Departures: {departureCount}".PadRight(15));
             Console.WriteLine($"Number of Registrants: {actualNumberOfRegistrants}".PadRight(40) + $"Checkout Duration: {checkoutDuration}".PadRight(25));
             Console.WriteLine($"Hours of operation: {hoursOfOperation}");
-            Thread.Sleep(500);
+            Thread.Sleep(50);
         } //end DrawLines()
         #endregion
 
