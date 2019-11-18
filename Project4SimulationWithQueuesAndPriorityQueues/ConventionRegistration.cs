@@ -116,7 +116,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 regLines.Add(new Queue<Registrant>());
             } //end for (int i = 0; i < numberOfWindows; i++)
 
-            while (PQ.Count > 0)
+            while (PQ.Count > 0 || !AllQueuesEmpty())
             {
                 while (PQ.Count > 0 && !(PQ.Peek().Type == EVENTTYPE.DEPARTURE))
                 {
@@ -128,17 +128,13 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                             PQ.Peek().Registrant.DepartureTime = PQ.Peek().Registrant.ArrivalTime + PQ.Peek().Registrant.Interval;
 
                             PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(PQ.Peek().Registrant.DepartureTime), PQ.Peek().Registrant));
-                            eventCount++;
-                
-                       
+                            eventCount++;     
                     }//end if(regLines[shortestLine].Count == 0)
-                   // if(PQ.Count > 0)
-                    //{
-                   regLines[shortestLine].Enqueue(PQ.Peek().Registrant);
-                   arrivalCount++;
-                    //}//end if(PQ.Count > 0)
+                 
+                    regLines[shortestLine].Enqueue(PQ.Peek().Registrant);
+                    arrivalCount++;
                     
-                    
+
                     Console.SetCursorPosition(0, 0);
                    
     
@@ -157,11 +153,9 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                         
                         if (regLines[i].Count > 0 && PQ.Peek().Registrant.RegistrantNumber == regLines[i].Peek().RegistrantNumber)
                         {
-                           
-                            DrawLines();
-                          
                             regLines[i].Dequeue();
-                            if(regLines[i].Count > 0)
+                            DrawLines();
+                            if (regLines[i].Count > 0)
                             {
                                 regLines[i].Peek().Interval = new TimeSpan(0, (int)(checkoutDuration + NegativeExponential(3)), 0);
                                 regLines[i].Peek().DepartureTime = regLines[i].Peek().ArrivalTime + regLines[i].Peek().Interval;
@@ -177,7 +171,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                     departureCount++;
                     DrawLines();
                 } //end if (PQ.Peek().Type == EVENTTYPE.DEPARTURE)
-                
+             
             }
             Console.WriteLine("Simulation done.");
             Console.ReadLine();
@@ -281,9 +275,29 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             Console.WriteLine($"Events Processed So Far: {eventCount}".PadRight(32) + $"Arrivals: {arrivalCount}".PadRight(16) + $"Departures: {departureCount}".PadRight(15));
             Console.WriteLine($"Number of Registrants: {actualNumberOfRegistrants}".PadRight(40) + $"Checkout Duration: {checkoutDuration}".PadRight(25));
             Console.WriteLine($"Hours of operation: {hoursOfOperation}");
-            Thread.Sleep(500);
+            Thread.Sleep(50);
         } //end DrawLines()
         #endregion
+
+     
+
+        /// <summary>
+        /// Determines if all the queues in the program are empty
+        /// </summary>
+        /// <returns>true if all queues are empty and false otherwise</returns>
+        private Boolean AllQueuesEmpty()
+        {
+            Boolean allQueuesEmpty = true;
+            for(int i = 0; i < regLines.Count; i++)
+            {
+                if(regLines[i].Count > 0)
+                {
+                    allQueuesEmpty = false;
+                }
+
+            }
+            return allQueuesEmpty;
+        }
 
         /// <summary>
         /// Generates the events for registrant arrival and departure times.
