@@ -23,14 +23,11 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
     class ConventionRegistration
     {
         private Random r;
-        private int maxLineCount;
+
         private PriorityQueue<Event> PQ;
         private List<Queue<Registrant>> regLines;
         private int actualNumberOfRegistrants;
         private DateTime openTime = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 8, 0, 0);
-
-
-        private string eventString = "";
         int eventCount = 0;
         int arrivalCount = 0;
         int departureCount = 0;
@@ -99,7 +96,6 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         public ConventionRegistration()
         {
             r = new Random();
-            maxLineCount = 1;
             PQ = new PriorityQueue<Event>();
             expectedNumberOfRegistrants = 1000;
             hoursOfOperation = 10;
