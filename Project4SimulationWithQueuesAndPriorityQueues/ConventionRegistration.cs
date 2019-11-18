@@ -103,7 +103,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             hoursOfOperation = 10;
             numberOfWindows = 6;
             regLines = new List<Queue<Registrant>>(numberOfWindows);
-            checkoutDuration = 4.25;
+            checkoutDuration = 4.5;
 
         } //end ConventionRegistration()
 
@@ -112,6 +112,10 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         /// </summary>
         public void RunSimulation()
         {
+            longestQueueLine = 0;
+            eventCount = 0;
+            arrivalCount = 0;
+            departureCount = 0;
             for (int i = 0; i < numberOfWindows; i++)
             {
                 regLines.Add(new Queue<Registrant>());
