@@ -101,9 +101,9 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             PQ = new PriorityQueue<Event>();
             expectedNumberOfRegistrants = 1000;
             hoursOfOperation = 10;
-            numberOfWindows = 1;
+            numberOfWindows = 6;
             regLines = new List<Queue<Registrant>>(numberOfWindows);
-            checkoutDuration = 4.5;
+            checkoutDuration = 4.25;
 
         } //end ConventionRegistration()
 
@@ -125,7 +125,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                     
                     if (regLines[shortestLine].Count == 0)
                     {
-                            PQ.Peek().Registrant.Interval = new TimeSpan(0, (int)(checkoutDuration + NegativeExponential(3)), 0);
+                            PQ.Peek().Registrant.Interval = new TimeSpan(0, (int)(1.5 + NegativeExponential(checkoutDuration - 1.5)), 0);
                             PQ.Peek().Registrant.DepartureTime = PQ.Peek().Registrant.ArrivalTime + PQ.Peek().Registrant.Interval;
 
                             PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(PQ.Peek().Registrant.DepartureTime), PQ.Peek().Registrant));    
@@ -161,7 +161,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                            // DrawLines();
                             if (regLines[i].Count > 0)
                             {
-                                regLines[i].Peek().Interval = new TimeSpan(0, (int)(checkoutDuration + NegativeExponential(3)), 0);
+                                regLines[i].Peek().Interval = new TimeSpan(0, (int)(1.5 + NegativeExponential(checkoutDuration - 1.5)), 0);
                                 regLines[i].Peek().DepartureTime = regLines[i].Peek().Interval + previousPerson;//possible solution?
                                 PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(regLines[i].Peek().DepartureTime), regLines[i].Peek()));
                             }//end if(regLines[i].Count > 0)
@@ -253,7 +253,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 }//end while(queues[i].Count < LongestLine())
             } //end for (int i = 0; i < queues.Count; i++)
 
-            int indexCounter = 0;
+          
             for (int i = 0; i < LongestLine(); i++)
             {
                 for (int j = 0; j < numberOfWindows; j++)
@@ -273,13 +273,20 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
 
                 Console.Write("\n");
             } //end for (int i = 0; i < LongestLine(); i++)
+            int indexCounter = 0;
+            while (LongestLine() + indexCounter < longestQueueLine)
+            {
+                Console.WriteLine();
+                indexCounter++;
+            }// end while (LongestLine() + indexCounter < longestQueueLine)
+
             Console.WriteLine("So Far: -------------------------------------------------------------------------");
             Console.WriteLine($"Longest Queue So Far: {longestQueueLine}");
             Console.WriteLine();
             Console.WriteLine($"Events Processed So Far: {eventCount}".PadRight(32) + $"Arrivals: {arrivalCount}".PadRight(16) + $"Departures: {departureCount}".PadRight(15));
             Console.WriteLine($"Number of Registrants: {actualNumberOfRegistrants}".PadRight(40) + $"Checkout Duration: {checkoutDuration}".PadRight(25));
             Console.WriteLine($"Hours of operation: {hoursOfOperation}");
-            Thread.Sleep(50);
+            Thread.Sleep(10);
         } //end DrawLines()
         #endregion
 
