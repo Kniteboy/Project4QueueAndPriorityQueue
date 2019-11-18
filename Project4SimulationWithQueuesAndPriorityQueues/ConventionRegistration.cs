@@ -28,6 +28,12 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         private List<Queue<Registrant>> regLines;
         private int actualNumberOfRegistrants;
         private DateTime openTime = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 8, 0, 0);
+
+
+        private string eventString = "";
+        int eventCount = 0;
+        int arrivalCount = 0;
+        int departureCount = 0;
         
         #region Properties
         private int expectedNumberOfRegistrants;
@@ -126,15 +132,18 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                         PQ.Peek().Registrant.DepartureTime = PQ.Peek().Registrant.ArrivalTime + PQ.Peek().Registrant.Interval;
                         
                         PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(PQ.Peek().Registrant.DepartureTime), PQ.Peek().Registrant));
-                    }//if(regLines[shortestLine].Count == 0)
+                    }//end if(regLines[shortestLine].Count == 0)
                     regLines[shortestLine].Enqueue(PQ.Peek().Registrant);
                     
                     Console.SetCursorPosition(0, 0);
                    
+    
                     DrawLines();
-                    Console.Write($"{PQ.Peek().Registrant.RegistrantNumber} arrived at {PQ.Peek().Registrant.ArrivalTime}");
-                    Console.ReadKey();
+
+                    
                     PQ.Dequeue();
+                    eventCount++;
+                    arrivalCount++;
                 } //end while (!(PQ.Peek().Type == EVENTTYPE.DEPARTURE))
                 if (PQ.Peek().Type == EVENTTYPE.DEPARTURE)
                 {
@@ -144,8 +153,9 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                         
                         if (regLines[i].Count > 0 && PQ.Peek().Registrant.RegistrantNumber == regLines[i].Peek().RegistrantNumber)
                         {
-                            Console.Write($"{regLines[i].Peek().RegistrantNumber} departed at {regLines[i].Peek().DepartureTime}");
-                            Console.ReadKey();
+                           
+                            DrawLines();
+                          
                             regLines[i].Dequeue();
                             if(regLines[i].Count > 0)
                             {
@@ -159,7 +169,8 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                     } //end for (int i = 0; i < numberOfWindows; i++)
                     
                     PQ.Dequeue();
-
+                    eventCount++;
+                    departureCount++;
                     DrawLines();
                 } //end if (PQ.Peek().Type == EVENTTYPE.DEPARTURE)
             }
@@ -233,6 +244,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 }//end while(queues[i].Count < LongestLine())
             } //end for (int i = 0; i < queues.Count; i++)
 
+            int indexCounter = 0;
             for (int i = 0; i < LongestLine(); i++)
             {
                 for (int j = 0; j < numberOfWindows; j++)
@@ -246,9 +258,19 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                         Console.Write($"\t    ");
                     } //end else
                 } //end for (int j = 0; j < numberOfWindows; j++)
+
+
+
+
                 Console.Write("\n");
             } //end for (int i = 0; i < LongestLine(); i++)
-            Thread.Sleep(1000);
+            Console.WriteLine("So Far: -------------------------------------------------------------------------");
+            Console.WriteLine($"Longest Queue So Far: {LongestLine()}");
+            Console.WriteLine();
+            Console.WriteLine($"Events Processed So Far: {eventCount}".PadRight(32) + $"Arrivals: {arrivalCount}".PadRight(16) + $"Departures: {departureCount}".PadRight(15));
+            Console.WriteLine($"Number of Registrants: {actualNumberOfRegistrants}".PadRight(40) + $"Checkout Duration: {checkoutDuration}".PadRight(25));
+            Console.WriteLine($"Hours of operation: {hoursOfOperation}");
+            Thread.Sleep(500);
         } //end DrawLines()
         #endregion
 

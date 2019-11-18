@@ -46,6 +46,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 {
                     case Choices.NUMBEROFREGISTRANTS:
                         //Set the expected value of registrants here
+                        Console.WriteLine("What is the expected value of registrants to be at this event?");
                         int numberOfRegistrants = 0;
                         while(numberOfRegistrants == 0)
                         {
@@ -56,6 +57,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                     case Choices.HOURSOFOPERATION:
                         //set the hours of operation here
                         int hoursOfOperation = 0;
+                        Console.WriteLine("How many hours will you be open? (Type in the number)");
                         while (hoursOfOperation == 0)
                         {
                             Int32.TryParse(Console.ReadLine(), out hoursOfOperation);
@@ -64,6 +66,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                         break;
                     case Choices.NUMBEROFWINDOWS:
                         //set the number of windows here
+                        Console.WriteLine("How many windows do you want to be open? (Type in the number)");
                         int numberOfWindows = 0;
                         while (numberOfWindows == 0)
                         {
@@ -73,11 +76,17 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                         break;
                     case Choices.CHECKOUTDURATION:
                         //set the expected value of the checkout duration here
+                        Console.WriteLine("What is the expected service time for a Registrant in minutes?\nExample: Enter 5.5 for 5 and a half minutes (5 minutes, 30 seconds).\n (Checkout time cannot be less than 1 minute, 30 seconds)");
                         double checkoutDuration = 0.0;
-                        while (checkoutDuration == 0.0)
+                        while (checkoutDuration == 0.0 || checkoutDuration < 1.5)
                         {
+                            
                             Double.TryParse(Console.ReadLine(), out checkoutDuration);
                             cr.CheckoutDuration = checkoutDuration;
+                            if (checkoutDuration < 1.5)
+                            {
+                                Console.WriteLine("Checkout duration cannot be less than one minute and thirty seconds");
+                            }
                         }
                         break;
                     case Choices.RUNSIMULATION:
