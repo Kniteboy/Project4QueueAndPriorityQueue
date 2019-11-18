@@ -127,11 +127,11 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                             PQ.Peek().Registrant.Interval = new TimeSpan(0, (int)(checkoutDuration + NegativeExponential(3)), 0);
                             PQ.Peek().Registrant.DepartureTime = PQ.Peek().Registrant.ArrivalTime + PQ.Peek().Registrant.Interval;
 
-                            PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(PQ.Peek().Registrant.DepartureTime), PQ.Peek().Registrant));
-                            eventCount++;     
+                            PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(PQ.Peek().Registrant.DepartureTime), PQ.Peek().Registrant));    
                     }//end if(regLines[shortestLine].Count == 0)
                  
                     regLines[shortestLine].Enqueue(PQ.Peek().Registrant);
+                    eventCount++;
                     arrivalCount++;
                     
 
@@ -153,12 +153,13 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                         
                         if (regLines[i].Count > 0 && PQ.Peek().Registrant.RegistrantNumber == regLines[i].Peek().RegistrantNumber)
                         {
+                            TimeSpan previousPerson = regLines[i].Peek().DepartureTime;         //test code to get right values
                             regLines[i].Dequeue();
                             DrawLines();
                             if (regLines[i].Count > 0)
                             {
                                 regLines[i].Peek().Interval = new TimeSpan(0, (int)(checkoutDuration + NegativeExponential(3)), 0);
-                                regLines[i].Peek().DepartureTime = regLines[i].Peek().ArrivalTime + regLines[i].Peek().Interval;
+                                regLines[i].Peek().DepartureTime = regLines[i].Peek().ArrivalTime + regLines[i].Peek().Interval + previousPerson;//possible solution?
                                 PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(regLines[i].Peek().DepartureTime), regLines[i].Peek()));
                             }//end if(regLines[i].Count > 0)
 
@@ -275,7 +276,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             Console.WriteLine($"Events Processed So Far: {eventCount}".PadRight(32) + $"Arrivals: {arrivalCount}".PadRight(16) + $"Departures: {departureCount}".PadRight(15));
             Console.WriteLine($"Number of Registrants: {actualNumberOfRegistrants}".PadRight(40) + $"Checkout Duration: {checkoutDuration}".PadRight(25));
             Console.WriteLine($"Hours of operation: {hoursOfOperation}");
-            Thread.Sleep(50);
+            //Thread.Sleep(5);
         } //end DrawLines()
         #endregion
 
