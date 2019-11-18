@@ -139,7 +139,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                     Console.SetCursorPosition(0, 0);
                    
     
-                    DrawLines();
+                    //DrawLines();
 
 
                  
@@ -158,11 +158,11 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                             regLines[i].Dequeue();
                             eventCount++;
                             departureCount++;
-                            DrawLines();
+                           // DrawLines();
                             if (regLines[i].Count > 0)
                             {
                                 regLines[i].Peek().Interval = new TimeSpan(0, (int)(checkoutDuration + NegativeExponential(3)), 0);
-                                regLines[i].Peek().DepartureTime = regLines[i].Peek().ArrivalTime + regLines[i].Peek().Interval + previousPerson;//possible solution?
+                                regLines[i].Peek().DepartureTime = regLines[i].Peek().Interval + previousPerson;//possible solution?
                                 PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(regLines[i].Peek().DepartureTime), regLines[i].Peek()));
                             }//end if(regLines[i].Count > 0)
 
@@ -171,9 +171,9 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                     } //end for (int i = 0; i < numberOfWindows; i++)
                     
                     PQ.Dequeue();
-                    DrawLines();
+                   // DrawLines();
                 } //end if (PQ.Peek().Type == EVENTTYPE.DEPARTURE)
-             
+                DrawLines();
             }
             Console.WriteLine("Simulation done.");
             Messaging message = new Messaging();
@@ -279,7 +279,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             Console.WriteLine($"Events Processed So Far: {eventCount}".PadRight(32) + $"Arrivals: {arrivalCount}".PadRight(16) + $"Departures: {departureCount}".PadRight(15));
             Console.WriteLine($"Number of Registrants: {actualNumberOfRegistrants}".PadRight(40) + $"Checkout Duration: {checkoutDuration}".PadRight(25));
             Console.WriteLine($"Hours of operation: {hoursOfOperation}");
-            Thread.Sleep(500);
+            Thread.Sleep(50);
         } //end DrawLines()
         #endregion
 
