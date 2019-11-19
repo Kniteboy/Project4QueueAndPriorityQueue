@@ -109,9 +109,10 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             PQ = new PriorityQueue<Event>();
             expectedNumberOfRegistrants = 1000;
             hoursOfOperation = 10;
-            numberOfWindows = 6;
+            numberOfWindows = 9;
             regLines = new List<Queue<Registrant>>(numberOfWindows);
             checkoutDuration = 4.5;
+            Console.Title = "Registration Simulation";
 
         } //end ConventionRegistration()
 
