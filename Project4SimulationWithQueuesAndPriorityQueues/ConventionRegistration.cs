@@ -33,10 +33,11 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         int eventCount = 0;
         int arrivalCount = 0;
         int departureCount = 0;
+
         TimeSpan avgInterval = new TimeSpan(0, 0, 0);
         TimeSpan minInterval = new TimeSpan(0, 0, 0);
         TimeSpan maxInterval = new TimeSpan(0, 0, 0);
-
+        
         #region Properties
         private int expectedNumberOfRegistrants;
 
@@ -158,7 +159,6 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                     arrivalCount++;
 
                     Console.SetCursorPosition(0, 0);
-                   
     
                     //DrawLines();
                  
@@ -207,11 +207,13 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 } //end if (PQ.Peek().Type == EVENTTYPE.DEPARTURE)
                 DrawLines();
             }
+            
             Console.WriteLine("Simulation done.");
 
             avgInterval = TimeSpan.FromSeconds(avgInterval.TotalSeconds / actualNumberOfRegistrants);
 
             Console.WriteLine($"\nAverage Service Time: {avgInterval}");
+
             Console.WriteLine($"Minimum Service Time: {minInterval}");
             Console.WriteLine($"Maximum Service Time: {maxInterval}");
 
@@ -270,14 +272,15 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
 
             headerText += "\n\t\t\tRegistration Windows";
             headerText += "\n\t\t\t--------------------\n\n";
-
+            
             for (int i = 0; i < numberOfWindows; i++)
             {
                 headerText += $"\tW {i + 1}";
             } //end for (int i = 0; i < numberOfWindows; i++)
-
+            Console.ForegroundColor = ConsoleColor.Red; 
             Console.Clear();
             Console.WriteLine(headerText);
+            Console.ForegroundColor = ConsoleColor.Blue;
 
             for (int i = 0; i < numberOfWindows; i++)
             {
@@ -291,6 +294,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                     queues[i].Add(new Registrant());
                 }//end while(queues[i].Count < LongestLine())
             } //end for (int i = 0; i < queues.Count; i++)
+
           
             for (int i = 0; i < LongestLine(); i++)
             {
@@ -306,6 +310,9 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                     } //end else
                 } //end for (int j = 0; j < numberOfWindows; j++)
 
+
+
+
                 Console.Write("\n");
             } //end for (int i = 0; i < LongestLine(); i++)
             int indexCounter = 0;
@@ -315,13 +322,17 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 indexCounter++;
             }// end while (LongestLine() + indexCounter < longestQueueLine)
 
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("So Far: -------------------------------------------------------------------------");
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"Longest Queue So Far: {longestQueueLine}");
             Console.WriteLine();
             Console.WriteLine($"Events Processed So Far: {eventCount}".PadRight(32) + $"Arrivals: {arrivalCount}".PadRight(16) + $"Departures: {departureCount}".PadRight(15));
             Console.WriteLine($"Number of Registrants: {actualNumberOfRegistrants}".PadRight(40) + $"Checkout Duration: {checkoutDuration}".PadRight(25));
             Console.WriteLine($"Hours of operation: {hoursOfOperation}");
+
             Thread.Sleep(10);
+
         } //end DrawLines()
 
         /// <summary>
@@ -352,7 +363,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
 
             for (int i = 1; i <= actualNumberOfRegistrants; i++)
             {
-                start = new TimeSpan(0, r.Next(hoursOfOperation * 60), 0);
+                start = new TimeSpan(0, r.Next(10 * 60), 0);
 
                 Registrant temp = new Registrant(i, start);
 
