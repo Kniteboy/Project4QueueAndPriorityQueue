@@ -93,7 +93,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                         //run the simulation
                         cr.GenerateEvents();
                         cr.RunSimulation();
-                        Console.ReadLine();
+                        PressAnyKey();
                         break;
                 }
                 
@@ -102,5 +102,16 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
 
 
         }//end Main()
+
+        /// <summary>
+        /// Prints a statement telling the user to press any key to do an action specified by strVerb.
+        /// </summary>
+        /// <param name="strVerb">String that specifies what the program will do if the user presses any key.</param>
+        public static void PressAnyKey(string strVerb = "continue...")
+        {
+            Console.WriteLine($"\nPress any key to {strVerb}");
+            Console.ReadKey();
+        } //end PressAnyKey(string strVerb = "continue...")
+
     }//end SimulationDriver
 }//end name space Project4SimulationWithQueuesAndPriorityQueues
