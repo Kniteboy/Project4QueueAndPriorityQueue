@@ -234,10 +234,10 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             }
             avgInterval = TimeSpan.FromSeconds(avgInterval.TotalSeconds / actualNumberOfRegistrants);
 
-            Console.WriteLine($"\nAverage Service Time: {avgInterval}");
+            Console.WriteLine($"\nAverage Service Time: {avgInterval.ToString("g")}");
 
-            Console.WriteLine($"Minimum Service Time: {minInterval}");
-            Console.WriteLine($"Maximum Service Time: {maxInterval}");
+            Console.WriteLine($"Minimum Service Time: {minInterval.ToString("g")}");
+            Console.WriteLine($"Maximum Service Time: {maxInterval.ToString("g")}");
         } //end RunSimulation()
 
         #region Utility Methods
@@ -342,7 +342,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             Console.WriteLine($"Number of Registrants: {actualNumberOfRegistrants}".PadRight(40) + $"Checkout Duration: {checkoutDuration}".PadRight(25));
             Console.WriteLine($"Hours of operation: {hoursOfOperation}");
 
-            Thread.Sleep(100);
+          //  Thread.Sleep(100);
         } //end DrawLines()
 
         /// <summary>
