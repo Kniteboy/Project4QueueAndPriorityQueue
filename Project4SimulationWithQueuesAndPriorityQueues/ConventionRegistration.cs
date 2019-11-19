@@ -33,6 +33,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         int eventCount = 0;
         int arrivalCount = 0;
         int departureCount = 0;
+        double averageServiceTime;
         
         #region Properties
         private int expectedNumberOfRegistrants;
@@ -130,6 +131,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                     if (regLines[shortestLine].Count == 0)
                     {
                             PQ.Peek().Registrant.Interval = new TimeSpan(0, (int)(1.5 + NegativeExponential(checkoutDuration - 1.5)), 0);
+                            averageServiceTime += PQ.Peek().Registrant.Interval.TotalSeconds;
                             PQ.Peek().Registrant.DepartureTime = PQ.Peek().Registrant.ArrivalTime + PQ.Peek().Registrant.Interval;
 
                             PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(PQ.Peek().Registrant.DepartureTime), PQ.Peek().Registrant));    
@@ -166,6 +168,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                             if (regLines[i].Count > 0)
                             {
                                 regLines[i].Peek().Interval = new TimeSpan(0, (int)(1.5 + NegativeExponential(checkoutDuration - 1.5)), 0);
+                                averageServiceTime += PQ.Peek().Registrant.Interval.TotalSeconds;
                                 regLines[i].Peek().DepartureTime = regLines[i].Peek().Interval + previousPerson;//possible solution?
                                 PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(regLines[i].Peek().DepartureTime), regLines[i].Peek()));
                             }//end if(regLines[i].Count > 0)
@@ -179,7 +182,13 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 } //end if (PQ.Peek().Type == EVENTTYPE.DEPARTURE)
                 DrawLines();
             }
+            
             Console.WriteLine("Simulation done.");
+            averageServiceTime /= actualNumberOfRegistrants;
+            averageServiceTime /= 60;
+            int minutes = (int) averageServiceTime;
+            int seconds = (int)averageServiceTime % 60;
+            Console.WriteLine($"Average service time: {minutes}:{seconds}");
             Messaging message = new Messaging();
 
             Console.ReadLine();
@@ -293,6 +302,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             Console.WriteLine($"Events Processed So Far: {eventCount}".PadRight(32) + $"Arrivals: {arrivalCount}".PadRight(16) + $"Departures: {departureCount}".PadRight(15));
             Console.WriteLine($"Number of Registrants: {actualNumberOfRegistrants}".PadRight(40) + $"Checkout Duration: {checkoutDuration}".PadRight(25));
             Console.WriteLine($"Hours of operation: {hoursOfOperation}");
+          
             Thread.Sleep(100);
         } //end DrawLines()
         #endregion
