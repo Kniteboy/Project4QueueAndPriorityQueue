@@ -138,14 +138,11 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                     regLines[shortestLine].Enqueue(PQ.Peek().Registrant);
                     eventCount++;
                     arrivalCount++;
-                    
 
                     Console.SetCursorPosition(0, 0);
                    
     
                     //DrawLines();
-
-
                  
                     PQ.Dequeue();
                     
@@ -256,7 +253,6 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                     queues[i].Add(new Registrant());
                 }//end while(queues[i].Count < LongestLine())
             } //end for (int i = 0; i < queues.Count; i++)
-
           
             for (int i = 0; i < LongestLine(); i++)
             {
@@ -271,9 +267,6 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                         Console.Write($"\t    ");
                     } //end else
                 } //end for (int j = 0; j < numberOfWindows; j++)
-
-
-
 
                 Console.Write("\n");
             } //end for (int i = 0; i < LongestLine(); i++)
@@ -292,9 +285,6 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             Console.WriteLine($"Hours of operation: {hoursOfOperation}");
             Thread.Sleep(50);
         } //end DrawLines()
-        #endregion
-
-     
 
         /// <summary>
         /// Determines if all the queues in the program are empty
@@ -332,6 +322,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 //PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(temp.DepartureTime), temp));
             } //end for (int i = 0; i < actualNumberOfRegistrants; i++)
         } //end GenerateEvents()
+        #endregion
 
         #region Random Distributions
         /// <summary>
