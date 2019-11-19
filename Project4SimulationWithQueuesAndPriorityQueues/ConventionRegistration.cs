@@ -33,7 +33,10 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         int eventCount = 0;
         int arrivalCount = 0;
         int departureCount = 0;
-        double averageServiceTime;
+
+        TimeSpan avgInterval = new TimeSpan(0, 0, 0);
+        TimeSpan minInterval = new TimeSpan(0, 0, 0);
+        TimeSpan maxInterval = new TimeSpan(0, 0, 0);
         
         #region Properties
         private int expectedNumberOfRegistrants;
@@ -113,6 +116,9 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         /// </summary>
         public void RunSimulation()
         {
+            minInterval = new TimeSpan(0, 0, 0);
+            maxInterval = new TimeSpan(0, 0, 0);
+            avgInterval = new TimeSpan(0, 0, 0);
             longestQueueLine = 0;
             eventCount = 0;
             arrivalCount = 0;
@@ -130,24 +136,31 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                     
                     if (regLines[shortestLine].Count == 0)
                     {
-                            PQ.Peek().Registrant.Interval = new TimeSpan(0, (int)(1.5 + NegativeExponential(checkoutDuration - 1.5)), 0);
-                            averageServiceTime += PQ.Peek().Registrant.Interval.TotalSeconds;
-                            PQ.Peek().Registrant.DepartureTime = PQ.Peek().Registrant.ArrivalTime + PQ.Peek().Registrant.Interval;
+                        PQ.Peek().Registrant.Interval = new TimeSpan(0, (int)(1.5 + NegativeExponential(checkoutDuration - 1.5)), 0);
+                        PQ.Peek().Registrant.DepartureTime = PQ.Peek().Registrant.ArrivalTime + PQ.Peek().Registrant.Interval;
 
-                            PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(PQ.Peek().Registrant.DepartureTime), PQ.Peek().Registrant));    
+                        if (PQ.Peek().Registrant.Interval < minInterval || minInterval.Equals(new TimeSpan(0, 0, 0)))
+                        {
+                            minInterval = PQ.Peek().Registrant.Interval;
+                        } //end if (PQ.Peek().Registrant.Interval < minInterval || minInterval.Equals(new TimeSpan(0, 0, 0)))
+
+                        if (PQ.Peek().Registrant.Interval > maxInterval)
+                        {
+                            maxInterval = PQ.Peek().Registrant.Interval;
+                        } //end if (PQ.Peek().Registrant.Interval > maxInterval)
+
+                        avgInterval = avgInterval.Add(PQ.Peek().Registrant.Interval);
+
+                        PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(PQ.Peek().Registrant.DepartureTime), PQ.Peek().Registrant));    
                     }//end if(regLines[shortestLine].Count == 0)
                  
                     regLines[shortestLine].Enqueue(PQ.Peek().Registrant);
                     eventCount++;
                     arrivalCount++;
-                    
 
                     Console.SetCursorPosition(0, 0);
-                   
     
                     //DrawLines();
-
-
                  
                     PQ.Dequeue();
                     
@@ -168,7 +181,19 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                             if (regLines[i].Count > 0)
                             {
                                 regLines[i].Peek().Interval = new TimeSpan(0, (int)(1.5 + NegativeExponential(checkoutDuration - 1.5)), 0);
-                                averageServiceTime += PQ.Peek().Registrant.Interval.TotalSeconds;
+
+                                if (regLines[i].Peek().Interval < minInterval || minInterval.Equals(new TimeSpan(0, 0, 0)))
+                                {
+                                    minInterval = regLines[i].Peek().Interval;
+                                } //end if (regLines[i].Peek().Interval < minInterval || minInterval.Equals(new TimeSpan(0, 0, 0)))
+
+                                if (regLines[i].Peek().Interval > maxInterval)
+                                {
+                                    maxInterval = regLines[i].Peek().Interval;
+                                } //end if (regLines[i].Peek().Interval > maxInterval)
+
+                                avgInterval = avgInterval.Add(regLines[i].Peek().Interval);
+
                                 regLines[i].Peek().DepartureTime = regLines[i].Peek().Interval + previousPerson;//possible solution?
                                 PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(regLines[i].Peek().DepartureTime), regLines[i].Peek()));
                             }//end if(regLines[i].Count > 0)
@@ -184,11 +209,14 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             }
             
             Console.WriteLine("Simulation done.");
-            averageServiceTime /= actualNumberOfRegistrants;
-            averageServiceTime /= 60;
-            int minutes = (int) averageServiceTime;
-            int seconds = (int)averageServiceTime % 60;
-            Console.WriteLine($"Average service time: {minutes}:{seconds}");
+
+            avgInterval = TimeSpan.FromSeconds(avgInterval.TotalSeconds / actualNumberOfRegistrants);
+
+            Console.WriteLine($"\nAverage Service Time: {avgInterval}");
+
+            Console.WriteLine($"Minimum Service Time: {minInterval}");
+            Console.WriteLine($"Maximum Service Time: {maxInterval}");
+
             Messaging message = new Messaging();
 
             Console.ReadLine();
@@ -302,12 +330,10 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             Console.WriteLine($"Events Processed So Far: {eventCount}".PadRight(32) + $"Arrivals: {arrivalCount}".PadRight(16) + $"Departures: {departureCount}".PadRight(15));
             Console.WriteLine($"Number of Registrants: {actualNumberOfRegistrants}".PadRight(40) + $"Checkout Duration: {checkoutDuration}".PadRight(25));
             Console.WriteLine($"Hours of operation: {hoursOfOperation}");
-          
-            Thread.Sleep(100);
-        } //end DrawLines()
-        #endregion
 
-     
+            Thread.Sleep(10);
+
+        } //end DrawLines()
 
         /// <summary>
         /// Determines if all the queues in the program are empty
@@ -345,6 +371,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 //PQ.Enqueue(new Event(EVENTTYPE.DEPARTURE, openTime.Add(temp.DepartureTime), temp));
             } //end for (int i = 0; i < actualNumberOfRegistrants; i++)
         } //end GenerateEvents()
+        #endregion
 
         #region Random Distributions
         /// <summary>
