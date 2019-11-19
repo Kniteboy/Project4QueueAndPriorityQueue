@@ -180,7 +180,8 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                            // DrawLines();
                             if (regLines[i].Count > 0)
                             {
-                                regLines[i].Peek().Interval = new TimeSpan(0, (int)(1.5 + NegativeExponential(checkoutDuration - 1.5)), 0);
+                               
+                                regLines[i].Peek().Interval = new TimeSpan(0, (int)(1.5 + NegativeExponential(checkoutDuration - 1.5)) , 0);
 
                                 if (regLines[i].Peek().Interval < minInterval || minInterval.Equals(new TimeSpan(0, 0, 0)))
                                 {
