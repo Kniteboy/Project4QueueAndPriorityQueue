@@ -131,7 +131,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             string headerText = "";
 
             headerText += "\n\t\t\tRegistration Windows";
-            headerText += "\n\t\t\t____________________\n\n";
+            headerText += "\n\t\t\t--------------------\n\n";
 
             for (int i = 0; i < numberOfWindows; i++)
             {
