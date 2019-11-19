@@ -290,7 +290,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             Console.WriteLine($"Events Processed So Far: {eventCount}".PadRight(32) + $"Arrivals: {arrivalCount}".PadRight(16) + $"Departures: {departureCount}".PadRight(15));
             Console.WriteLine($"Number of Registrants: {actualNumberOfRegistrants}".PadRight(40) + $"Checkout Duration: {checkoutDuration}".PadRight(25));
             Console.WriteLine($"Hours of operation: {hoursOfOperation}");
-            Thread.Sleep(10);
+            Thread.Sleep(50);
         } //end DrawLines()
         #endregion
 
@@ -324,7 +324,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
 
             for (int i = 1; i <= actualNumberOfRegistrants; i++)
             {
-                start = new TimeSpan(0, r.Next(10 * 60), 0);
+                start = new TimeSpan(0, r.Next(hoursOfOperation * 60), 0);
 
                 Registrant temp = new Registrant(i, start);
 
