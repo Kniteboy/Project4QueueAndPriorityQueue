@@ -26,7 +26,6 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         /// <summary>
         /// Used to give each registrant a number (generated from a Poisson distribution)
         /// </summary>
-
         public int RegistrantNumber { get; set; }
 
         /// <summary>
@@ -93,23 +92,5 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         }//end Registrant(int registrantNumber, TimeSpan arrivalTime, int expectedRegistrationTime)
 
         #endregion constructor
-
-
-
-        #region distribution code
-
-        /// <summary>
-        /// The negative exponential function determines how long an individual stays at the registration booth (after getting out of the line)
-        /// </summary>
-        /// <param name="ExpectedValue">The expected time taken by each registrant</param>
-        /// <returns>The time taken at the registration booth</returns>
-        private static double NegativeExponential(double ExpectedValue)
-        {
-            return -ExpectedValue * Math.Log(Registrant.r.NextDouble(), Math.E);
-        }//end NegativeExponential(double ExpectedValue)
-
-
-        #endregion distribution code
-
     }
 }

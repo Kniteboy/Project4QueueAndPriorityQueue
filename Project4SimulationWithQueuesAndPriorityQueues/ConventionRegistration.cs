@@ -286,11 +286,9 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         {
             List<List<Registrant>> queues = new List<List<Registrant>>();
 
-
             ClearConsoleLines(6, LongestLine() + indexCounter + 6);
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.SetCursorPosition(0,6);
-
 
             for (int i = 0; i < numberOfWindows; i++)
             {
@@ -304,7 +302,6 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                     queues[i].Add(new Registrant());
                 }//end while(queues[i].Count < LongestLine())
             } //end for (int i = 0; i < queues.Count; i++)
-
           
             for (int i = 0; i < LongestLine(); i++)
             {
@@ -320,12 +317,8 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                     } //end else
                 } //end for (int j = 0; j < numberOfWindows; j++)
 
-
-
-
                 Console.Write("\n");
             } //end for (int i = 0; i < LongestLine(); i++)
-
             
             while (LongestLine() + indexCounter < longestQueueLine)
             {
@@ -342,7 +335,7 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             Console.WriteLine($"Number of Registrants: {actualNumberOfRegistrants}".PadRight(40) + $"Checkout Duration: {checkoutDuration}".PadRight(25));
             Console.WriteLine($"Hours of operation: {hoursOfOperation}");
 
-          //  Thread.Sleep(100);
+            Thread.Sleep(75);
         } //end DrawLines()
 
         /// <summary>
@@ -384,10 +377,10 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
 
         #region Random Distributions
         /// <summary>
-        /// The method generating numbers from a Poisson distribution for the registrant's display number
+        /// The method generating numbers from a Poisson distribution for the number of registrants
         /// </summary>
         /// <param name="ExpectedValue">The expected number of registrants</param>
-        /// <returns>a number from the Poisson distribution</returns>
+        /// <returns>a random number from the Poisson distribution</returns>
         private int Poisson(double ExpectedValue)
         {
             double dLimit = -ExpectedValue;
@@ -398,8 +391,6 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 dSum += Math.Log(r.NextDouble());
             return Count;
         } //end Poisson(double ExpectedValue)
-
-
 
         /// <summary>
         /// A method to clear specific console lines

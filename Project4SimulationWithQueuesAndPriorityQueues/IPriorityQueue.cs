@@ -2,7 +2,7 @@
 //
 //	Solution/Project:  Project4SimulationWithQueuesAndPriorityQueues/Project4SimulationWithQueuesAndPriorityQueues
 //	File Name:         IPriorityQueue.cs
-//	Description:       Specifiy methods and properties for a priority queue
+//	Description:       Specify methods and properties for a priority queue
 //	Course:            CSCI 2210 - Data Structures	
 //	Author:            Drew Whitinger, whitingera@etsu.edu
 //	Created:           Friday, November 15, 2019
