@@ -34,6 +34,10 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         int arrivalCount = 0;
         int departureCount = 0;
 
+
+        int indexCounter = 0;
+
+
         TimeSpan avgInterval = new TimeSpan(0, 0, 0);
         TimeSpan minInterval = new TimeSpan(0, 0, 0);
         TimeSpan maxInterval = new TimeSpan(0, 0, 0);
@@ -123,6 +127,21 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
             eventCount = 0;
             arrivalCount = 0;
             departureCount = 0;
+
+            string headerText = "";
+
+            headerText += "\n\t\t\tRegistration Windows";
+            headerText += "\n\t\t\t____________________\n\n";
+
+            for (int i = 0; i < numberOfWindows; i++)
+            {
+                headerText += $"\tW {i + 1}";
+            } //end for (int i = 0; i < numberOfWindows; i++)
+
+            Console.ForegroundColor = ConsoleColor.Red;
+
+            Console.WriteLine(headerText);
+
             for (int i = 0; i < numberOfWindows; i++)
             {
                 regLines.Add(new Queue<Registrant>());
@@ -266,20 +285,10 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
         {
             List<List<Registrant>> queues = new List<List<Registrant>>();
 
-            string headerText = "";
 
-            headerText += "\n\t\t\tRegistration Windows";
-            headerText += "\n\t\t\t--------------------\n\n";
-            
-            for (int i = 0; i < numberOfWindows; i++)
-            {
-                headerText += $"\tW {i + 1}";
-            } //end for (int i = 0; i < numberOfWindows; i++)
-
-            Console.ForegroundColor = ConsoleColor.Red; 
-            Console.Clear();
-            Console.WriteLine(headerText);
+            ClearConsoleLines(6, LongestLine() + indexCounter + 6);
             Console.ForegroundColor = ConsoleColor.Blue;
+            Console.SetCursorPosition(0,6);
 
 
             for (int i = 0; i < numberOfWindows; i++)
@@ -315,7 +324,8 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
 
                 Console.Write("\n");
             } //end for (int i = 0; i < LongestLine(); i++)
-            int indexCounter = 0;
+
+            
             while (LongestLine() + indexCounter < longestQueueLine)
             {
                 Console.WriteLine();
@@ -387,6 +397,25 @@ namespace Project4SimulationWithQueuesAndPriorityQueues
                 dSum += Math.Log(r.NextDouble());
             return Count;
         } //end Poisson(double ExpectedValue)
+
+
+
+        /// <summary>
+        /// A method to clear specific console lines
+        /// </summary>
+        /// <param name="start">The starting row to clear</param>
+        /// <param name="end">The ending row to clear</param>
+        private static void ClearConsoleLines(int start, int end)
+        {
+            Console.SetCursorPosition(start, 0);
+            for (int i = 0; i < end; i++)
+            {
+                Console.SetCursorPosition(0, start + i);
+                Console.Write(new string(' ', Console.WindowWidth));
+                
+            }//end for(int i = 0; i < end; i++)
+
+        }//end ClearConsoleLines(int start, int end)
 
         /// <summary>
         /// The negative exponential function determines how long an individual stays at the registration booth (after getting out of the line)
