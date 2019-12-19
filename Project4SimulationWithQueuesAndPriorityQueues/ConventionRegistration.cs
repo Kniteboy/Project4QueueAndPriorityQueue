@@ -4,9 +4,9 @@
 //	File Name:		ConventionRegistration.cs
 //	Description:		Class used to manage the simulation of registration windows in a convention
 //	Course:			CSCI 2210-001 - Data Structures
-//	Author:			Edmund Yong, yongez@etsu.edu, Department of Computing, East Tennessee State University
+//	Author:			Edmund Yong, yongez@etsu.edu, Seth Norton, nortonsp@etsu.edu, Department of Computing, East Tennessee State University
 //	Created:			Friday, November 15, 2019
-//	Copyright:		Edmund Yong, 2019
+//	Copyright:		Edmund Yong, Seth Norton 2019
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
